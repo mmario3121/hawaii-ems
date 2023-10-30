@@ -24,4 +24,24 @@ class Employee extends Model
         'salary_net',
         'salary_gross',
     ];
+    
+    //relations
+    protected $casts = [
+        'birthday' => 'date',
+    ];
+    //position
+    public function getPosition()
+    {
+        return $this->belongsTo(Position::class, 'position_id');
+    }
+    //company
+    public function getCompany()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
+    }
+    //department
+    public function getDepartment()
+    {
+        return $this->belongsTo(Department::class, 'department_id');
+    }
 }
