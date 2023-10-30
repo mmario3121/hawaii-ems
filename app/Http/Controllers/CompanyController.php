@@ -3,6 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UpdateCompanyRequest;
+use App\Http\Requests\StoreCompanyRequest;
+use App\Http\Resources\CompanyResource;
+use App\Models\Company;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\JsonResponse;
+
 
 class CompanyController extends Controller
 {

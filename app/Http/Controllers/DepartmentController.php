@@ -45,10 +45,10 @@ class DepartmentController extends Controller
     //index with resource and pagination
     public function index()
     {
-        $departments = Department::paginate(10);
+        $departments = Department::all();
         return new JsonResponse([
             'message' => 'success',
-            'data' => $departments,
+            'data' => DepartmentResource::collection($departments),
         ], Response::HTTP_OK);
     }
 }
