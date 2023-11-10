@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Tabel;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -17,16 +17,13 @@ class EmployeeResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'birthday' => $this->birthday,
-            'phone' => $this->phone,
-            'position_id' => $this->position->title,
-            'iin' => $this->iin,
-            'email' => $this->email,
-            'company_id' => $this->company->title,
+            'position' => $this->position->title,
+            'company' => $this->company->title,
             'shift' => $this->shift,
-            'department_id' => $this->department->title,
+            'department' => $this->department->title,
             'salary_net' => $this->salary_net,
             'salary_gross' => $this->salary_gross,
+            'workdays' => WorkdayResource::collection($this->whenLoaded('workdays')),
         ];
     }
 }

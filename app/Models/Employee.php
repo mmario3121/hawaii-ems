@@ -30,18 +30,23 @@ class Employee extends Model
         'birthday' => 'date',
     ];
     //position
-    public function getPosition()
+    public function position()
     {
         return $this->belongsTo(Position::class, 'position_id');
     }
     //company
-    public function getCompany()
+    public function company()
     {
         return $this->belongsTo(Company::class, 'company_id');
     }
     //department
-    public function getDepartment()
+    public function department()
     {
         return $this->belongsTo(Department::class, 'department_id');
+    }
+
+    public function workdays()
+    {
+        return $this->hasMany(Workday::class);
     }
 }

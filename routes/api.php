@@ -37,3 +37,13 @@ Route::get('/companies/get', [\App\Http\Controllers\CompanyController::class, 'i
 Route::post('/companies/create', [\App\Http\Controllers\CompanyController::class, 'store']);
 Route::post('/companies/update', [\App\Http\Controllers\CompanyController::class, 'update']);
 Route::post('/companies/delete', [\App\Http\Controllers\CompanyController::class, 'destroy']);
+
+
+//tabel
+Route::get('/tabel/get', [\App\Http\Controllers\TabelController::class, 'index']);
+
+//workdays
+Route::get('/workdays/get', [\App\Http\Controllers\WorkdayController::class, 'index']);
+Route::post('/workdays/create', [\App\Http\Controllers\WorkdayController::class, 'store']);
+Route::post('/workdays/update', [\App\Http\Controllers\WorkdayController::class, 'update']);
+Route::post('/workdays/delete', [\App\Http\Controllers\WorkdayController::class, 'destroy']);
