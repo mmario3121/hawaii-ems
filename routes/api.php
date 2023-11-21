@@ -13,37 +13,53 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+//login
+Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, 'login']);
 
-//employees
-Route::get('/employees/get', [\App\Http\Controllers\EmployeeController::class, 'index']);
-Route::post('/employees/create', [\App\Http\Controllers\EmployeeController::class, 'store']);
-Route::post('/employees/update', [\App\Http\Controllers\EmployeeController::class, 'update']);
-Route::post('/employees/delete', [\App\Http\Controllers\EmployeeController::class, 'destroy']);
-
-//departments
-Route::get('/departments/get', [\App\Http\Controllers\DepartmentController::class, 'index']);
-Route::post('/departments/create', [\App\Http\Controllers\DepartmentController::class, 'store']);
-Route::post('/departments/update', [\App\Http\Controllers\DepartmentController::class, 'update']);
-Route::post('/departments/delete', [\App\Http\Controllers\DepartmentController::class, 'destroy']);
-
-//positions
-Route::get('/positions/get', [\App\Http\Controllers\PositionController::class, 'index']);
-Route::post('/positions/create', [\App\Http\Controllers\PositionController::class, 'store']);
-Route::post('/positions/update', [\App\Http\Controllers\PositionController::class, 'update']);
-Route::post('/positions/delete', [\App\Http\Controllers\PositionController::class, 'destroy']);
-
-//companies
-Route::get('/companies/get', [\App\Http\Controllers\CompanyController::class, 'index']);
-Route::post('/companies/create', [\App\Http\Controllers\CompanyController::class, 'store']);
-Route::post('/companies/update', [\App\Http\Controllers\CompanyController::class, 'update']);
-Route::post('/companies/delete', [\App\Http\Controllers\CompanyController::class, 'destroy']);
+//logout
+Route::middleware('auth:sanctum')->post('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout']);
 
 
-//tabel
-Route::get('/tabel/get', [\App\Http\Controllers\TabelController::class, 'index']);
+//check role
+Route::middleware(['auth:sanctum', 'role:developer|manager|admin|hr|treasurer'])->group(function () {
 
-//workdays
-Route::get('/workdays/get', [\App\Http\Controllers\WorkdayController::class, 'index']);
-Route::post('/workdays/create', [\App\Http\Controllers\WorkdayController::class, 'store']);
-Route::post('/workdays/update', [\App\Http\Controllers\WorkdayController::class, 'update']);
-Route::post('/workdays/delete', [\App\Http\Controllers\WorkdayController::class, 'destroy']);
+        //employees
+    Route::get('/employees/get', [\App\Http\Controllers\EmployeeController::class, 'index']);
+    Route::post('/employees/create', [\App\Http\Controllers\EmployeeController::class, 'store']);
+    Route::post('/employees/update', [\App\Http\Controllers\EmployeeController::class, 'update']);
+    Route::post('/employees/delete', [\App\Http\Controllers\EmployeeController::class, 'destroy']);
+
+    //departments
+    Route::get('/departments/get', [\App\Http\Controllers\DepartmentController::class, 'index']);
+    Route::post('/departments/create', [\App\Http\Controllers\DepartmentController::class, 'store']);
+    Route::post('/departments/update', [\App\Http\Controllers\DepartmentController::class, 'update']);
+    Route::post('/departments/delete', [\App\Http\Controllers\DepartmentController::class, 'destroy']);
+
+    //positions
+    Route::get('/positions/get', [\App\Http\Controllers\PositionController::class, 'index']);
+    Route::post('/positions/create', [\App\Http\Controllers\PositionController::class, 'store']);
+    Route::post('/positions/update', [\App\Http\Controllers\PositionController::class, 'update']);
+    Route::post('/positions/delete', [\App\Http\Controllers\PositionController::class, 'destroy']);
+
+    //companies
+    Route::get('/companies/get', [\App\Http\Controllers\CompanyController::class, 'index']);
+    Route::post('/companies/create', [\App\Http\Controllers\CompanyController::class, 'store']);
+    Route::post('/companies/update', [\App\Http\Controllers\CompanyController::class, 'update']);
+    Route::post('/companies/delete', [\App\Http\Controllers\CompanyController::class, 'destroy']);
+
+
+    //tabel
+    Route::get('/tabel/get', [\App\Http\Controllers\TabelController::class, 'index']);
+
+    //workdays
+    Route::get('/workdays/get', [\App\Http\Controllers\WorkdayController::class, 'index']);
+    Route::post('/workdays/create', [\App\Http\Controllers\WorkdayController::class, 'store']);
+    Route::post('/workdays/update', [\App\Http\Controllers\WorkdayController::class, 'update']);
+    Route::post('/workdays/delete', [\App\Http\Controllers\WorkdayController::class, 'destroy']);
+
+    //holidays
+    Route::get('/holidays/get', [\App\Http\Controllers\HolidayController::class, 'index']);
+    Route::post('/holidays/create', [\App\Http\Controllers\HolidayController::class, 'store']);
+    Route::post('/holidays/update', [\App\Http\Controllers\HolidayController::class, 'update']);
+    Route::post('/holidays/delete', [\App\Http\Controllers\HolidayController::class, 'destroy']);
+});
