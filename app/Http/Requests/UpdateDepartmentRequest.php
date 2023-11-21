@@ -23,6 +23,7 @@ class UpdateDepartmentRequest extends FormRequest
     {
         return [
             'title' => 'required|max:255',
+            'id' => 'required|integer',
         ];
     }
 }
