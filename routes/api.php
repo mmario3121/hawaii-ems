@@ -62,4 +62,13 @@ Route::middleware(['auth:sanctum', 'role:developer|manager|admin|hr|treasurer'])
     Route::post('/holidays/create', [\App\Http\Controllers\HolidayController::class, 'store']);
     Route::post('/holidays/update', [\App\Http\Controllers\HolidayController::class, 'update']);
     Route::post('/holidays/delete', [\App\Http\Controllers\HolidayController::class, 'destroy']);
+
+    //users
+    Route::get('/users/get', [\App\Http\Controllers\UserController::class, 'index']);
+    Route::post('/users/create', [\App\Http\Controllers\UserController::class, 'store']);
+    Route::post('/users/update', [\App\Http\Controllers\UserController::class, 'update']);
+    Route::post('/users/delete', [\App\Http\Controllers\UserController::class, 'destroy']);
+
+    Route::get('/roles/get', [\App\Http\Controllers\UserController::class, 'getAllRoles']);
+    Route::post('/roles/assign', [\App\Http\Controllers\UserController::class, 'assignRole']);
 });
