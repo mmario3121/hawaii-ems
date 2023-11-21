@@ -56,4 +56,40 @@ class UserController extends Controller
             return response()->json(['error' => 'Error assigning role'], 500);
         }
     }
+
+    //create user
+    public function store(StoreUserRequest $request)
+{
+    $validated = $request->validated();
+    
+    User::create([
+        'name' => $validated['name'],
+        'email' => $validated['email'],
+        'password' => bcrypt($validated['password']),
+        'email_verified_at' => now(),
+    ])->assignRole([$validated['role']]);
+
+    return new JsonResponse([
+        'message' => 'success',
+    ], Response::HTTP_OK);
+}
+
+public function update(UpdateUserRequest $request)
+    {
+        $validated = $request->validated();
+        $user = User::find($validated['id']);
+        $user->update($validated);
+        return new JsonResponse([
+            'message' => 'success',
+        ], Response::HTTP_OK);
+    }
+
+    public function destroy(Request $request)
+    {
+        $user = User::find($request->id);
+        $user->delete();
+        return new JsonResponse([
+            'message' => 'success',
+        ], Response::HTTP_OK);
+    }
 }
