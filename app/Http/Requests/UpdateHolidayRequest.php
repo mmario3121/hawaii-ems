@@ -27,6 +27,7 @@ class UpdateHolidayRequest extends FormRequest
             'is_holiday' => 'required|boolean',
             'is_weekend' => 'required|boolean',
             'is_workday' => 'required|boolean',
+            'id' => 'required|integer',
         ];
     }
 }
