@@ -22,6 +22,7 @@ class WorkdayResource extends JsonResource
             'sickleave' => $this->sickleave,
             'vacation' => $this->vacation,
             'holiday' => $this->holiday,
+            'isWorkday' => $this->isWorkday,
         ];
     }
 }

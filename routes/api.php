@@ -71,4 +71,12 @@ Route::middleware(['auth:sanctum', 'role:developer|manager|admin|hr|treasurer'])
 
     Route::get('/roles/get', [\App\Http\Controllers\UserController::class, 'getAllRoles']);
     Route::post('/roles/assign', [\App\Http\Controllers\UserController::class, 'assignRole']);
+
+    //shifts
+    Route::get('/shifts/get', [\App\Http\Controllers\ShiftController::class, 'index']);
+    Route::post('/shifts/create', [\App\Http\Controllers\ShiftController::class, 'store']);
+    Route::post('/shifts/update', [\App\Http\Controllers\ShiftController::class, 'update']);
+    Route::post('/shifts/delete', [\App\Http\Controllers\ShiftController::class, 'destroy']);
+
+    Route::post('/shifts/assign', [\App\Http\Controllers\ShiftController::class, 'generateWorkdays']);
 });

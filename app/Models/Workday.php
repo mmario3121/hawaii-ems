@@ -17,7 +17,7 @@ class Workday extends Model
         'sickleave',
         'vacation',
         'holiday',
-        
+        'isWorkday'
     ];
 
     public function employee()

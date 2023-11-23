@@ -47,6 +47,6 @@ class Employee extends Model
 
     public function workdays()
     {
-        return $this->hasMany(Workday::class);
+        return $this->hasMany(Workday::class)->orderBy('date');
     }
 }
