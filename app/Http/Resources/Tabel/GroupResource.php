@@ -6,7 +6,7 @@ use App\Http\Resources\Tabel\EmployeeResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DepartmentResource extends JsonResource
+class GroupResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,8 +17,8 @@ class DepartmentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'groups' => GroupResource::collection($this->whenLoaded('groups')),
+            'name' => $this->name,
+            'employees' => EmployeeResource::collection($this->whenLoaded('employees')),
         ];
     }
 }

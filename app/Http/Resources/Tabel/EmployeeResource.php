@@ -21,6 +21,7 @@ class EmployeeResource extends JsonResource
             'company' => $this->company->title,
             'shift' => $this->shift,
             'department' => $this->department->title,
+            'group' => $this->group->name,
             'salary_net' => $this->salary_net,
             'salary_gross' => $this->salary_gross,
             'workdays' => WorkdayResource::collection($this->whenLoaded('workdays')),

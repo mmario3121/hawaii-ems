@@ -79,4 +79,11 @@ Route::middleware(['auth:sanctum', 'role:developer|manager|admin|hr|treasurer'])
     Route::post('/shifts/delete', [\App\Http\Controllers\ShiftController::class, 'destroy']);
 
     Route::post('/shifts/assign', [\App\Http\Controllers\ShiftController::class, 'generateWorkdays']);
+
+
+    //groups
+    Route::get('/groups/get', [\App\Http\Controllers\GroupController::class, 'index']);
+    Route::post('/groups/create', [\App\Http\Controllers\GroupController::class, 'store']);
+    Route::post('/groups/update', [\App\Http\Controllers\GroupController::class, 'update']);
+    Route::post('/groups/delete', [\App\Http\Controllers\GroupController::class, 'destroy']);
 });

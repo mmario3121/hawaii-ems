@@ -34,6 +34,7 @@ class UpdateEmployeeRequest extends FormRequest
             'department_id' => 'required|integer',
             'salary_net' => 'required|integer',
             'salary_gross' => 'required|integer',
+            'group_id' => '',
         ];
     }
 }

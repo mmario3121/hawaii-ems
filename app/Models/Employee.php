@@ -21,6 +21,7 @@ class Employee extends Model
         'company_id',
         'shift',
         'department_id',
+        'group_id',
         'salary_net',
         'salary_gross',
     ];
@@ -48,5 +49,10 @@ class Employee extends Model
     public function workdays()
     {
         return $this->hasMany(Workday::class)->orderBy('date');
+    }
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class, 'group_id');
     }
 }

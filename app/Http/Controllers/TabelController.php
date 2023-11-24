@@ -11,8 +11,9 @@ class TabelController extends Controller
     //
     public function index(Request $request)
     {
-        $departments = Department::with('employees.workdays')->find($request->department_id);
-        $data = new DepartmentResource($departments);
+        $department = Department::with(['groups.employees.workdays', 'groups'])->find($request->department_id);
+        
+        $data = new DepartmentResource($department);
 
         return response()->json(['data' => $data]);
     }

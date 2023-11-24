@@ -35,6 +35,9 @@ class EmployeeController extends Controller
     public function destroy(Request $request)
     {
         $employee = Employee::find($request->id);
+
+        //delete workdays
+        $employee->workdays()->delete();
         $employee->delete();
         return new JsonResponse([
             'message' => 'success',
