@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('employees', function (Blueprint $table) {
             //
-            $table->foreignId('group_id')->constrained();
+            $table->bigInteger('group_id')->nullable();
         });
     }
 
