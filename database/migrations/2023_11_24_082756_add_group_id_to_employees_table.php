@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('employees', function (Blueprint $table) {
             //
-            $table->bigInteger('group_id')->nullable();
+            // $table->bigInteger('group_id')->nullable();
         });
     }
 
