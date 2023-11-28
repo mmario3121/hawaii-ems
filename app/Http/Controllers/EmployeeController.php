@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Resources\EmployeeResource;
+use App\Http\Resources\EmployeeIdResource;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -90,6 +91,15 @@ class EmployeeController extends Controller
         return new JsonResponse([
             'message' => 'success',
             'data' => new EmployeeResource($employee),
+        ], Response::HTTP_OK);
+    }
+
+    public function getEmployeeId(Request $request)
+    {
+        $employee = Employee::findorFail($request->id);
+        return new JsonResponse([
+            'message' => 'success',
+            'data' => new EmployeeIdResource($employee),
         ], Response::HTTP_OK);
     }
 }

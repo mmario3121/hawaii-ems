@@ -30,7 +30,7 @@ Route::middleware(['auth:sanctum', 'role:developer|manager|admin|hr|treasurer'])
     Route::post('/employees/delete', [\App\Http\Controllers\EmployeeController::class, 'destroy']);
     //get employee by id
     Route::get('/employees/get/{id}', [\App\Http\Controllers\EmployeeController::class, 'getEmployeeById']);
-
+    Route::get('/employees/getId/{id}', [\App\Http\Controllers\EmployeeController::class, 'getEmployeeId']);
     //departments
     Route::get('/departments/get', [\App\Http\Controllers\DepartmentController::class, 'index']);
     Route::post('/departments/create', [\App\Http\Controllers\DepartmentController::class, 'store']);
