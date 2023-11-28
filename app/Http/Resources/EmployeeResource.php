@@ -23,7 +23,7 @@ class EmployeeResource extends JsonResource
             'iin' => $this->iin,
             'email' => $this->email,
             'company_id' => $this->company->title,
-            'group_id' => $this->group->name,
+            'group_id' => $this->group_id,
             'shift' => $this->shift,
             'department_id' => $this->department->title,
             'salary_net' => $this->salary_net,
