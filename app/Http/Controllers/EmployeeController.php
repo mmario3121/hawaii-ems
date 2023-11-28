@@ -82,4 +82,14 @@ class EmployeeController extends Controller
             'data' => EmployeeResource::collection($employees),
         ], Response::HTTP_OK);
     }   
+
+    //getEmployeeById
+    public function getEmployeeById(Request $request)
+    {
+        $employee = Employee::findorFail($request->id);
+        return new JsonResponse([
+            'message' => 'success',
+            'data' => new EmployeeResource($employee),
+        ], Response::HTTP_OK);
+    }
 }
