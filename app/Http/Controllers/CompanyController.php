@@ -43,8 +43,9 @@ class CompanyController extends Controller
             'message' => 'success',
         ], Response::HTTP_OK);
     }
-    public function destroy(Company $company)
+    public function destroy(Request $request)
     {
+        $company = Company::find($request->id);
         $company->delete();
         return new JsonResponse([
             'message' => 'success',
