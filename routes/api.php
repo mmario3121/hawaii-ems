@@ -88,4 +88,11 @@ Route::middleware(['auth:sanctum', 'role:developer|manager|admin|hr|treasurer'])
     Route::post('/groups/create', [\App\Http\Controllers\GroupController::class, 'store']);
     Route::post('/groups/update', [\App\Http\Controllers\GroupController::class, 'update']);
     Route::post('/groups/delete', [\App\Http\Controllers\GroupController::class, 'destroy']);
+
+    //absences
+
+    Route::get('/absences/get', [\App\Http\Controllers\AbsenceController::class, 'index']);
+    Route::post('/absences/create', [\App\Http\Controllers\AbsenceController::class, 'store']);
+    Route::post('/absences/update', [\App\Http\Controllers\AbsenceController::class, 'update']);
+    Route::post('/absences/delete', [\App\Http\Controllers\AbsenceController::class, 'destroy']);
 });

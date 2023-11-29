@@ -24,7 +24,9 @@ class EmployeeResource extends JsonResource
             'group' => $this->group->name,
             'salary_net' => $this->salary_net,
             'salary_gross' => $this->salary_gross,
+            'number' => $this->number,
             'workdays' => WorkdayResource::collection($this->whenLoaded('workdays')),
+            'workhours' => $this->workhours(),
         ];
     }
 }

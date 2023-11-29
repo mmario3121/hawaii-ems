@@ -17,11 +17,17 @@ class Workday extends Model
         'sickleave',
         'vacation',
         'holiday',
-        'isWorkday'
+        'isWorkday',
+        'absence_id',
     ];
 
     public function employee()
     {
         return $this->belongsTo(Employee::class);
+    }
+
+    public function absence()
+    {
+        return $this->belongsTo(Absence::class);
     }
 }

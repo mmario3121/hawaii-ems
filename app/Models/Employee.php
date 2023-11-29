@@ -24,6 +24,7 @@ class Employee extends Model
         'group_id',
         'salary_net',
         'salary_gross',
+        'number'
     ];
     
     //relations
@@ -54,5 +55,16 @@ class Employee extends Model
     public function group()
     {
         return $this->belongsTo(Group::class, 'group_id');
+    }
+
+    public function workhours()
+    {
+       //calculate workhours from workdays last month
+        $workdays = $this->workdays()->get();
+        $workhours = 0;
+        foreach ($workdays as $workday) {
+            $workhours += $workday->workhours;
+        }
+        return $workhours;
     }
 }

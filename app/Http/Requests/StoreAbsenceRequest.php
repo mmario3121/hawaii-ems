@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCompanyRequest extends FormRequest
+class StoreAbsenceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,9 @@ class StoreCompanyRequest extends FormRequest
     {
         return [
             //
+            'type' => 'required|max:255',
             'title' => 'required|max:255',
-            'bin' => 'max:255',
+            'color' => 'required|max:255',
         ];
     }
 }

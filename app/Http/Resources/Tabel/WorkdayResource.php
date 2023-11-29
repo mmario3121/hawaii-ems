@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Tabel;
 
+use App\Http\Resources\AbsenceResource;
+use App\Models\Absence;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,6 +25,7 @@ class WorkdayResource extends JsonResource
             'vacation' => $this->vacation,
             'holiday' => $this->holiday,
             'isWorkday' => $this->isWorkday,
+            'absence' => new AbsenceResource(Absence::find($this->absence_id)),
         ];
     }
 }
