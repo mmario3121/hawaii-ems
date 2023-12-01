@@ -17,6 +17,8 @@ class DepartmentResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'owner' => new EmployeeResource($this->whenLoaded('owner')),
+            'zams' => EmployeeResource::collection($this->whenLoaded('zams')),
         ];
     }
 }

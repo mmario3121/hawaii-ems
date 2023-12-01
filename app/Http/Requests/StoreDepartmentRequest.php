@@ -24,6 +24,7 @@ class StoreDepartmentRequest extends FormRequest
         return [
             //
             'title' => 'required|max:255',
+            'owner_id' => 'required|exists:employees,id',
         ];
     }
 }

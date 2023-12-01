@@ -43,8 +43,9 @@ class AbsenceController extends Controller
             'message' => 'success',
         ], Response::HTTP_OK);
     }
-    public function destroy(Absence $absence)
+    public function destroy(Request $request)
     {
+        $absence = Absence::find($request->id);
         $absence->delete();
         return new JsonResponse([
             'message' => 'success',

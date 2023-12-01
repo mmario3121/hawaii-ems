@@ -45,7 +45,7 @@ class DepartmentController extends Controller
     //index with resource and pagination
     public function index()
     {
-        $departments = Department::all();
+        $departments = Department::with('owner', 'zams')->get();
         return new JsonResponse([
             'message' => 'success',
             'data' => DepartmentResource::collection($departments),

@@ -95,4 +95,9 @@ Route::middleware(['auth:sanctum', 'role:developer|manager|admin|hr|treasurer'])
     Route::post('/absences/create', [\App\Http\Controllers\AbsenceController::class, 'store']);
     Route::post('/absences/update', [\App\Http\Controllers\AbsenceController::class, 'update']);
     Route::post('/absences/delete', [\App\Http\Controllers\AbsenceController::class, 'destroy']);
+
+    //DepartmentEmployee
+    Route::post('/zams/create', [\App\Http\Controllers\DepartmentEmployeeController::class, 'store']);
+    Route::post('/zams/delete', [\App\Http\Controllers\DepartmentEmployeeController::class, 'destroy']);
+    
 });

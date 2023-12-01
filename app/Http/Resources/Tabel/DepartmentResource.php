@@ -18,6 +18,7 @@ class DepartmentResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'owner' => new EmployeeResource($this->whenLoaded('owner')),
             'groups' => GroupResource::collection($this->whenLoaded('groups')),
         ];
     }

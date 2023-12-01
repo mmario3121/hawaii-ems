@@ -43,8 +43,9 @@ class HolidayController extends Controller
             'message' => 'success',
         ], Response::HTTP_OK);
     }
-    public function destroy(Holiday $holiday)
+    public function destroy(Request $request)
     {
+        $holiday = Holiday::find($request->id);
         $holiday->delete();
         return new JsonResponse([
             'message' => 'success',
