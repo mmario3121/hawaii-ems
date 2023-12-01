@@ -99,5 +99,8 @@ Route::middleware(['auth:sanctum', 'role:developer|manager|admin|hr|treasurer'])
     //DepartmentEmployee
     Route::post('/zams/create', [\App\Http\Controllers\DepartmentEmployeeController::class, 'store']);
     Route::post('/zams/delete', [\App\Http\Controllers\DepartmentEmployeeController::class, 'destroy']);
+
+    //getGroupsByDepartmentId
+    Route::get('/groups/get/{id}', [\App\Http\Controllers\GroupController::class, 'getGroupsByDepartmentId']);
     
 });

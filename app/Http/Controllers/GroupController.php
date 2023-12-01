@@ -49,4 +49,14 @@ class GroupController extends Controller
         ], Response::HTTP_OK);
     }
 
+    //getGroupByDepartmentId
+    public function getGroupByDepartmentId(Request $request)
+    {
+        $groups = Group::where('department_id', $request->id)->get();
+        return new JsonResponse([
+            'message' => 'success',
+            'data' => GroupResource::collection($groups),
+        ], Response::HTTP_OK);
+    }
+
 }
