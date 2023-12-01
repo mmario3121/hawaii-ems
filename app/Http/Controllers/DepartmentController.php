@@ -51,4 +51,14 @@ class DepartmentController extends Controller
             'data' => DepartmentResource::collection($departments),
         ], Response::HTTP_OK);
     }
+
+    //getDepartmentById
+    public function getDepartmentById(Request $request)
+    {
+        $department = Department::with('owner', 'zams', 'groups')->find($request->id);
+        return new JsonResponse([
+            'message' => 'success',
+            'data' => new DepartmentResource($department),
+        ], Response::HTTP_OK);
+    }
 }
