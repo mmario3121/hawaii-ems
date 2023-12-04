@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Models\Company;
 
 class DepartmentResource extends JsonResource
 {
@@ -24,6 +25,7 @@ class DepartmentResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'bin' => $company_bin,
+            'company_id' => $this->company_id,
             'owner' => new EmployeeResource($this->whenLoaded('owner')),
             'zams' => EmployeeResource::collection($this->whenLoaded('zams')),
             'groups' => GroupResource::collection($this->whenLoaded('groups')), 

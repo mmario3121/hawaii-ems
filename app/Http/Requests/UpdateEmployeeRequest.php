@@ -29,7 +29,7 @@ class UpdateEmployeeRequest extends FormRequest
             'position_id' => 'required|integer',
             'iin' => 'required|max:255',
             'email' => 'required|max:255',
-            'company_id' => 'required|integer',
+            // 'company_id' => 'required|integer',
             'shift' => 'required|max:255',
             'department_id' => 'required|integer',
             'salary_net' => 'required|integer',
