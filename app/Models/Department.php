@@ -14,6 +14,7 @@ class Department extends Model
     protected $fillable = [
         'title',
         'owner_id',
+        'company_id'
     ];
 
     public function employees()
@@ -36,5 +37,11 @@ class Department extends Model
     public function zams()
     {
         return $this->belongsToMany(Employee::class, 'department_employees', 'department_id', 'employee_id');
+    }
+
+    //company
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
     }
 }

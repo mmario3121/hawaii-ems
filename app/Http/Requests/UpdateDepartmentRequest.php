@@ -25,6 +25,7 @@ class UpdateDepartmentRequest extends FormRequest
             'title' => 'required|max:255',
             'id' => 'required|integer',
             'owner_id' => 'required|exists:employees,id',
+            'company_id' => 'required|exists:companies,id',
         ];
     }
 }
