@@ -20,6 +20,13 @@ class EmployeeResource extends JsonResource
         } else {
             $company_title = '';
         }
+
+        if($this->city)
+        {
+            $city_title = $this->city->title;
+        } else {
+            $city_title = '';
+        }
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -35,6 +42,8 @@ class EmployeeResource extends JsonResource
             'salary_net' => $this->salary_net,
             'salary_gross' => $this->salary_gross,
             'number' => $this->number,
+            'city' => $city_title,
+            'address' => $this->address,
         ];
     }
 }

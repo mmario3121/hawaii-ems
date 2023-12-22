@@ -27,6 +27,12 @@ class EmployeeResource extends JsonResource
         } else {
             $group_name = '';
         }
+        $city = $this->city;
+        if($city) {
+            $city_title = $city->title;
+        } else {
+            $city_title = '';
+        }
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -40,7 +46,9 @@ class EmployeeResource extends JsonResource
             'number' => $this->number,
             'workdays' => WorkdayResource::collection($this->whenLoaded('workdays')),
             'workhours_count' => $this->workhours(),
-            'workdays_count' => $this->workdays_last_month()
+            'workdays_count' => $this->workdays_last_month(),
+            'city' => $city_title,
+            'address' => $this->address,
         ];
     }
 }

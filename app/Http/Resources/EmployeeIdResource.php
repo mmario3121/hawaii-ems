@@ -29,6 +29,8 @@ class EmployeeIdResource extends JsonResource
             'salary_net' => $this->salary_net,
             'salary_gross' => $this->salary_gross,
             'number' => $this->number,
+            'city_id' => $this->city_id,
+            'address' => $this->address,
         ];
     }
 }

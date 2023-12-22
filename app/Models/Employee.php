@@ -24,7 +24,9 @@ class Employee extends Model
         'group_id',
         'salary_net',
         'salary_gross',
-        'number'
+        'number',
+        'city_id',
+        'address',
     ];
     
     //relations
@@ -55,6 +57,11 @@ class Employee extends Model
     public function group()
     {
         return $this->belongsTo(Group::class, 'group_id');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
     }
 
     public function workhours()
