@@ -106,4 +106,10 @@ Route::middleware(['auth:sanctum', 'role:developer|manager|admin|hr|treasurer'])
     //getGroupsByDepartmentId
     Route::get('/groups/get/{id}', [\App\Http\Controllers\GroupController::class, 'getGroupsByDepartmentId']);
     
+
+    //cities
+    Route::get('/cities/get', [\App\Http\Controllers\CityController::class, 'index']);
+    Route::post('/cities/create', [\App\Http\Controllers\CityController::class, 'store']);
+    Route::post('/cities/update', [\App\Http\Controllers\CityController::class, 'update']);
+    Route::post('/cities/delete', [\App\Http\Controllers\CityController::class, 'destroy']);
 });

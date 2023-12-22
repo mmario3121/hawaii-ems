@@ -21,7 +21,14 @@ class WorkdayController extends Controller
     }
     public function store(Request $request) 
     {
-        $workday = Workday::create($request->all());
+        //if(workday with this date and employee_id exists, update it
+        //else create new workday)
+        $workday = Workday::where('date', $request->date)->where('employee_id', $request->employee_id)->first();
+        if($workday == null){
+            $workday = Workday::create($request->all());
+        }else{
+            $workday->update($request->all());
+        }
         return new JsonResponse([
             'message' => 'success',
         ], Response::HTTP_OK);

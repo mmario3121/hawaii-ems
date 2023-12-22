@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\UpdateEmployeeRequest;
 use Illuminate\Http\JsonResponse;
+use App\Models\Shift;
+use App\Models\Workday;
+use Carbon\Carbon;
 
 class EmployeeController extends Controller
 {
@@ -17,6 +20,9 @@ class EmployeeController extends Controller
     public function store(StoreEmployeeRequest $request)
     {
         $employee = Employee::create($request->all());
+        if($request->shift_id != null){
+            $this->generateWorkdays($employee->id, $request->shift_id);
+        }
         return new JsonResponse([
             'message' => 'success',
         ], Response::HTTP_OK);
@@ -101,5 +107,67 @@ class EmployeeController extends Controller
             'message' => 'success',
             'data' => new EmployeeIdResource($employee),
         ], Response::HTTP_OK);
+    }
+
+
+    public function generateWorkdays($employee_id, $shift_id)
+    {
+        // Assuming you have the necessary relationship between Employee and Shift in your models
+        $employee = Employee::find($employee_id);
+        
+        $shift = Shift::find($shift_id);
+        // dd($shift_id);
+        
+        $employee->shift = $shift->id;
+        $employee->save();
+        // Assuming $shift has 'work_days' and 'vacation_days' properties
+        $workDays = $shift->work_days;
+        $vacationDays = $shift->vacation_days;
+
+        $startDate = $shift->start_date; // Use the start_date from the assigned shift
+        // $endDate = Carbon::parse($startDate)->endOfMonth();
+        //end date is end of current month
+        $endDate = Carbon::now()->endOfMonth();
+        for ($date = Carbon::parse($startDate); $date->lte($endDate);) {
+            // Check if a workday exists for the current date and employee
+            $existingWorkday = Workday::where('date', $date)
+                ->where('employee_id', $employee->id)
+                ->first();
+
+            if ($existingWorkday) {
+                // If it exists, update it
+                $existingWorkday->update([
+                    'isWorkday' => 1, // Update other fields as needed
+                ]);
+                $date->addDay();
+            } else {
+                // If it doesn't exist, create a new one
+                for ($i = 0; $i < $workDays; $i++) {
+                    Workday::create([
+                        'date' => $date,
+                        'employee_id' => $employee->id,
+                        'isWorkday' => 1,
+                    ]);
+                    $date->addDay();
+                }
+
+                for ($i = 0; $i < $vacationDays; $i++) {
+                    Workday::create([
+                        'date' => $date,
+                        'employee_id' => $employee->id,
+                        'isWorkday' => 0,
+                    ]);
+                    $date->addDay();
+                }
+            }
+        }
+
+        return response()->json(['message' => 'Workdays generated successfully']);
+    }
+
+    public function getEmployees()
+    {
+        $employees = Employee::all();
+        return $employees;
     }
 }

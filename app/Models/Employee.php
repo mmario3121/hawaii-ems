@@ -60,11 +60,25 @@ class Employee extends Model
     public function workhours()
     {
        //calculate workhours from workdays last month
-        $workdays = $this->workdays()->get();
+        $workdays = $this->workdays()->whereBetween('date', [now()->startOfMonth(), now()->endOfMonth()])->get();
+        if($this->id == '6'){
+            // dd($workdays);
+        }
         $workhours = 0;
         foreach ($workdays as $workday) {
             $workhours += $workday->workhours;
         }
         return $workhours;
+    }
+
+    public function workdays_last_month()
+    {
+        return $this->workdays()->whereBetween('date', [now()->startOfMonth(), now()->endOfMonth()])->where('workhours', '>', '0')->count();
+    }
+
+    public function getShiftId()
+    {
+        $shift = Shift::find($this->shift);
+        return $shift->id;
     }
 }
