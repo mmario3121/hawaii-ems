@@ -79,6 +79,7 @@ class Employee extends Model
     public function getShiftId()
     {
         $shift = Shift::find($this->shift);
-        return $shift->id;
+        if($shift) return $shift->id;
+
     }
 }

@@ -21,9 +21,10 @@ class GenerateWorkdaysForAllEmployees extends Command
 
         foreach ($employees as $employee) {
             // dd($employee->shift);
-            $controller->generateWorkdays($employee->id, 
-            $employee->getShiftId()
-            );
+            if($employee->getShiftId() == null){
+                continue;
+            }
+            $controller->generateWorkdays($employee->id, $employee->getShiftId());
         }
 
         $this->info('Workdays generated for all employees');
