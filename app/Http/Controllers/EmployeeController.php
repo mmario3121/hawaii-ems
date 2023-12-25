@@ -57,7 +57,7 @@ class EmployeeController extends Controller
     //index with resource and pagination
     public function index()
     {
-        $employees = Employee::paginate(10);
+        $employees = Employee::all();
         return new JsonResponse([
             'message' => 'success',
             'data' => EmployeeResource::collection($employees),
