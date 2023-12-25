@@ -119,7 +119,7 @@ class EmployeeController extends Controller
         $employee = Employee::find($employee_id);
         
         $shift = Shift::find($shift_id);
-        dd($shift_id);
+        dd($shift);
         
         $employee->shift = $shift->id;
         $employee->save();
