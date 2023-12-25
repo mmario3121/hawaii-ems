@@ -20,8 +20,8 @@ class EmployeeController extends Controller
     public function store(StoreEmployeeRequest $request)
     {
         $employee = Employee::create($request->all());
-        if($request->shift_id != null){
-            $this->generateWorkdays($employee->id, $request->shift_id);
+        if($request->shift != null){
+            $this->generateWorkdays($employee->id, $request->shift);
         }
         return new JsonResponse([
             'message' => 'success',
@@ -33,6 +33,9 @@ class EmployeeController extends Controller
     {
         $employee = Employee::find($request->id);
         $employee->update($request->all());
+        if($request->shift != null){
+            $this->generateWorkdays($employee->id, $request->shift);
+        }
         return new JsonResponse([
             'message' => 'success',
         ], Response::HTTP_OK);
