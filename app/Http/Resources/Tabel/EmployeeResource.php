@@ -15,7 +15,7 @@ class EmployeeResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $company = Company::find($this->company_id);
+        $company = Company::find($this->department->company_id);
         if($company) {
             $company_title = $company->title;
         } else {
@@ -23,7 +23,7 @@ class EmployeeResource extends JsonResource
         }
         $group = $this->group;
         if($group) {
-            $group_name = $group->name;
+            $group_name = $group->title;
         } else {
             $group_name = '';
         }
