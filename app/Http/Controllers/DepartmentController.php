@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UpdateDepartmentRequest;
 use App\Http\Requests\StoreDepartmentRequest;
 use App\Http\Resources\DepartmentResource;
+use App\Http\Resources\DepartmentListResource;
 use App\Models\Department;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\JsonResponse;
@@ -49,6 +50,14 @@ class DepartmentController extends Controller
         return new JsonResponse([
             'message' => 'success',
             'data' => DepartmentResource::collection($departments),
+        ], Response::HTTP_OK);
+    }
+    public function list()
+    {
+        $departments = Department::all();
+        return new JsonResponse([
+            'message' => 'success',
+            'data' => DepartmentListResource::collection($departments),
         ], Response::HTTP_OK);
     }
 
