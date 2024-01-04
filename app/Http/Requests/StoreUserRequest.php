@@ -33,6 +33,7 @@ class StoreUserRequest extends FormRequest
                 'string',
                 Rule::in(['hr', 'treasurer', 'manager']),
             ],
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

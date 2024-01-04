@@ -92,4 +92,20 @@ public function update(UpdateUserRequest $request)
             'message' => 'success',
         ], Response::HTTP_OK);
     }
+
+    //set image
+
+    public function setImage(Request $request)
+    {
+        $user = User::find($request->id);
+        //save image in public folder
+        $image = $request->file('image');
+        $imageName = time() . '.' . $image->extension();
+        $image->move(public_path('images'), $imageName);
+        $user->image = $imageName;
+        $user->save();
+        return new JsonResponse([
+            'message' => 'success',
+        ], Response::HTTP_OK);
+    }
 }

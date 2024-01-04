@@ -49,6 +49,7 @@ class EmployeeResource extends JsonResource
             'workdays_count' => $this->workdays_last_month(),
             'city' => $city_title,
             'address' => $this->address,
+            'bin' => $this->bin,
         ];
     }
 }

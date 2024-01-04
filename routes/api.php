@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\TabelExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +20,7 @@ Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, 'login
 //logout
 Route::middleware('auth:sanctum')->post('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout']);
 
-
+Route::get('/export-tabel', [\App\Http\Controllers\TabelExportController::class, 'export']);
 //check role
 Route::middleware(['auth:sanctum', 'role:developer|manager|admin|hr|treasurer'])->group(function () {
 
@@ -74,6 +75,7 @@ Route::middleware(['auth:sanctum', 'role:developer|manager|admin|hr|treasurer'])
     Route::post('/users/create', [\App\Http\Controllers\UserController::class, 'store']);
     Route::post('/users/update', [\App\Http\Controllers\UserController::class, 'update']);
     Route::post('/users/delete', [\App\Http\Controllers\UserController::class, 'destroy']);
+    Route::post('/users/set-image', [\App\Http\Controllers\UserController::class, 'setImage']);
 
     Route::get('/roles/get', [\App\Http\Controllers\UserController::class, 'getAllRoles']);
     Route::post('/roles/assign', [\App\Http\Controllers\UserController::class, 'assignRole']);

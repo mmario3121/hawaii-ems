@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Holiday;
 use Illuminate\Http\Request;
 use App\Models\Department;
 use App\Http\Resources\Tabel\DepartmentResource;
@@ -11,10 +12,19 @@ class TabelController extends Controller
     //
     public function index(Request $request)
     {
-        $department = Department::with(['groups.employees.workdays', 'groups', 'owner'])->find($request->department_id);
-        
-        $data = new DepartmentResource($department);
+        $yearMonth = $request->input('year_month'); // предполагается, что 'year_month' - это ключ в запросе
+        [$year, $month] = explode('-', $yearMonth);
 
-        return response()->json(['data' => $data]);
+    $department = Department::with([
+        'groups.employees.workdays' => function ($query) use ($year, $month) {
+            $query->whereYear('date', $year)
+                  ->whereMonth('date', $month);
+        }, 
+        'groups', 
+        'owner',
+    ])->find($request->department_id);
+    
+    $data = new DepartmentResource($department);
+    return response()->json(['data' => $data]);
     }
 }

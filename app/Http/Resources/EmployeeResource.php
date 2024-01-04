@@ -52,6 +52,8 @@ class EmployeeResource extends JsonResource
             'address' => $this->address,
             'workhours_count' => $this->workhours(),
             'workdays_count' => $this->workdays_last_month(),
+            'bin' => $this->bin,
         ];
     }
 }
+14|hHzMlphFViRsXYmA6zxo6rFIwufnIBgg51Dt0dfhfbb585bc

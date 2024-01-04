@@ -36,6 +36,7 @@ class StoreEmployeeRequest extends FormRequest
             'salary_gross' => 'required|integer',
             'group_id' => 'integer',
             'number' => 'integer',
+            'bin' => 'max:255',
         ];
     }
 }

@@ -27,6 +27,7 @@ class UpdateUserRequest extends FormRequest
             'password' =>  'required|max:255',
             'name' => 'required|max:255',
             'id' => 'required|integer',
+            'image' => 'required|max:255',
         ];
     }
 }

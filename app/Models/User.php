@@ -8,11 +8,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
+    protected $appends = ['image_url'];
+    const IMAGE_PATH = 'images';
     /**
      * The attributes that are mass assignable.
      *
@@ -47,5 +50,10 @@ class User extends Authenticatable
     public function role(){
         //return frist role as string
         return $this->roles->pluck('name');
+    }
+
+    public function getImageUrlAttribute(): string|null
+    {
+        return $this->image ? Storage::disk('custom')->url(self::IMAGE_PATH . '/' . $this->image) : null;
     }
 }
