@@ -62,13 +62,20 @@ class UserController extends Controller
 {
     $validated = $request->validated();
     
-    User::create([
+    $user = User::create([
         'name' => $validated['name'],
         'email' => $validated['email'],
         'password' => bcrypt($validated['password']),
         'email_verified_at' => now(),
     ])->assignRole([$validated['role']]);
 
+    if($request->hasFile('image')){
+        $image = $request->file('image');
+        $imageName = time().'.'.$image->extension();
+        $image->move(public_path('images'), $imageName);
+        $user->image = $imageName;
+        $user->save();
+    }
     return new JsonResponse([
         'message' => 'success',
     ], Response::HTTP_OK);
@@ -79,6 +86,13 @@ public function update(UpdateUserRequest $request)
         $validated = $request->validated();
         $user = User::find($validated['id']);
         $user->update($validated);
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $imageName = time().'.'.$image->extension();
+            $image->move(public_path('images'), $imageName);
+            $user->image = $imageName;
+            $user->save();
+        }
         return new JsonResponse([
             'message' => 'success',
         ], Response::HTTP_OK);

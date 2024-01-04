@@ -20,7 +20,6 @@ class EmployeeResource extends JsonResource
         } else {
             $company_title = '';
         }
-
         if($this->city)
         {
             $city_title = $this->city->title;
@@ -56,4 +55,3 @@ class EmployeeResource extends JsonResource
         ];
     }
 }
-14|hHzMlphFViRsXYmA6zxo6rFIwufnIBgg51Dt0dfhfbb585bc
