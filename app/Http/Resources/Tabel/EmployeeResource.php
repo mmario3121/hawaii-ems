@@ -38,7 +38,7 @@ class EmployeeResource extends JsonResource
             'name' => $this->name,
             'position' => $this->position->title,
             'company' => $company_title,
-            'shift' => $this->shift,
+            'shift' => $this->getShiftName(),
             'department' => $this->department->title,
             'group' => $group_name,
             'salary_net' => $this->salary_net,

@@ -30,9 +30,9 @@ class LoginController extends Controller
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        if($user->tokens()->where('tokenable_id', $user->id)->exists()) {
-            $user->tokens()->delete();
-        }
+        // if($user->tokens()->where('tokenable_id', $user->id)->exists()) {
+        //     $user->tokens()->delete();
+        // }
 
         $tokenResult = $user->createToken('apiMentorMeToken');
         $token = $tokenResult->plainTextToken;
