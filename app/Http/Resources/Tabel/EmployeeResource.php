@@ -21,6 +21,11 @@ class EmployeeResource extends JsonResource
         } else {
             $company_title = '';
         }
+        if($company) {
+            $bin = $company->bin;
+        } else {
+            $bin = '';
+        }
         $group = $this->group;
         if($group) {
             $group_name = $group->name;
@@ -49,7 +54,7 @@ class EmployeeResource extends JsonResource
             'workdays_count' => $this->workdays_last_month(),
             'city' => $city_title,
             'address' => $this->address,
-            'bin' => $this->bin,
+            'bin' => $bin,
         ];
     }
 }
