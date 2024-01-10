@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateAbsenceRequest;
 use App\Http\Requests\StoreAbsenceRequest;
 use App\Http\Resources\AbsenceResource;
 use App\Models\Absence;
+use App\Models\Workday;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\JsonResponse;
 
@@ -46,6 +47,11 @@ class AbsenceController extends Controller
     public function destroy(Request $request)
     {
         $absence = Absence::find($request->id);
+        $workdays = Workday::where('absence_id', $request->id)->get();
+        foreach ($workdays as $workday) {
+            $workday->absence_id = null;
+            $workday->save();
+        }
         $absence->delete();
         return new JsonResponse([
             'message' => 'success',

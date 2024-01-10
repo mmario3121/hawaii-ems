@@ -64,13 +64,16 @@ class Employee extends Model
         return $this->belongsTo(City::class, 'city_id');
     }
 
-    public function workhours()
+    public function workhours($year_month)
     {
+        $year_month = explode('-', $year_month);
+        $year = $year_month[0];
+        $month = $year_month[1];
        //calculate workhours from workdays last month
-        $workdays = $this->workdays()->whereBetween('date', [now()->startOfMonth(), now()->endOfMonth()])->get();
-        if($this->id == '6'){
-            // dd($workdays);
-        }
+        $workdays = $this->workdays()->whereBetween('date', [
+            now()->startOfMonth()->setYear($year)->setMonth($month),
+            now()->endOfMonth()->setYear($year)->setMonth($month)
+            ])->get();
         $workhours = 0;
         foreach ($workdays as $workday) {
             $workhours += $workday->workhours;
@@ -78,9 +81,26 @@ class Employee extends Model
         return $workhours;
     }
 
-    public function workdays_last_month()
+    public function workdays_last_month($year_month)
     {
-        return $this->workdays()->whereBetween('date', [now()->startOfMonth(), now()->endOfMonth()])->where('workhours', '>', '0')->count();
+        $year_month = explode('-', $year_month);
+        $year = $year_month[0];
+        $month = $year_month[1];
+        return $this->workdays()->whereBetween('date', [
+            now()->startOfMonth()->setYear($year)->setMonth($month),
+            now()->endOfMonth()->setYear($year)->setMonth($month)
+            ])->where('workhours', '>', '0')->count();
+    }
+
+    public function norm($year_month)
+    {
+        $year_month = explode('-', $year_month);
+        $year = $year_month[0];
+        $month = $year_month[1];
+        return $this->workdays()->whereBetween('date', [
+            now()->startOfMonth()->setYear($year)->setMonth($month),
+            now()->endOfMonth()->setYear($year)->setMonth($month)
+            ])->where('isWorkday', '1')->count() * 8;
     }
 
     public function getShiftId()
