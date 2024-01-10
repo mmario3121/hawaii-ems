@@ -64,6 +64,20 @@ class Employee extends Model
         return $this->belongsTo(City::class, 'city_id');
     }
 
+    public function workhours_this()
+    {
+       //calculate workhours from workdays last month
+        $workdays = $this->workdays()->whereBetween('date', [
+            now()->startOfMonth(),
+            now()->endOfMonth()
+            ])->get();
+        $workhours = 0;
+        foreach ($workdays as $workday) {
+            $workhours += $workday->workhours;
+        }
+        return $workhours;
+    }
+
     public function workhours($year_month)
     {
         $year_month = explode('-', $year_month);
@@ -89,6 +103,14 @@ class Employee extends Model
         return $this->workdays()->whereBetween('date', [
             now()->startOfMonth()->setYear($year)->setMonth($month),
             now()->endOfMonth()->setYear($year)->setMonth($month)
+            ])->where('workhours', '>', '0')->count();
+    }
+    public function workdays_this_month($year_month)
+    {
+
+        return $this->workdays()->whereBetween('date', [
+            now()->startOfMonth(),
+            now()->endOfMonth()
             ])->where('workhours', '>', '0')->count();
     }
 
