@@ -54,8 +54,6 @@ class EmployeeResource extends JsonResource
             'number' => $this->number,
             'city' => $city_title,
             'address' => $this->address,
-            'workhours_count' => $this->workhours(),
-            'workdays_count' => $this->workdays_last_month(),
             'bin' => $bin,
         ];
     }
