@@ -26,9 +26,7 @@ class DepartmentResource extends JsonResource
         }
         $yearMonth = $request->input('year_month'); // предполагается, что 'year_month' - это ключ в запросе
         [$year, $month] = explode('-', $yearMonth);
-        $holidays = Holiday::whereYear('date', $year)
-                               ->whereMonth('date', $month)
-                               ->get();
+        $holidays = Holiday::whereYear('start_date', $year)->whereMonth('start_date', $month)->get();
         return [
             'id' => $this->id,
             'title' => $this->title,

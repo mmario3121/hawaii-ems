@@ -24,7 +24,8 @@ class StoreHolidayRequest extends FormRequest
         return [
             //
             'name' => 'required|max:255',
-            'date' => 'required',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
             'is_holiday' => 'required|boolean',
             'is_weekend' => 'required|boolean',
             'is_workday' => 'required|boolean', 

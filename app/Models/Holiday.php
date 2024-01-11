@@ -10,7 +10,8 @@ class Holiday extends Model
     use HasFactory;
 
     protected $fillable = [
-        'date',
+        'start_date',
+        'end_date',
         'name',
         'is_holiday',
         'is_weekend',

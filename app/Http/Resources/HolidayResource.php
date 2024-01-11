@@ -17,7 +17,8 @@ class HolidayResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'date' => $this->date,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
             'is_holiday' => $this->is_holiday,
             'is_weekend' => $this->is_weekend,
             'is_workday' => $this->is_workday,
