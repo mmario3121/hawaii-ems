@@ -24,7 +24,7 @@ class UpdateDepartmentRequest extends FormRequest
         return [
             'title' => 'required|max:255',
             'id' => 'required|integer',
-            'owner_id' => 'nullable|exists:employees,id',
+            'owner_id' => 'nullable|exists:users,id',
             // 'company_id' => 'required|exists:companies,id',
         ];
     }

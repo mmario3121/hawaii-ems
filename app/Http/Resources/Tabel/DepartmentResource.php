@@ -8,6 +8,8 @@ use App\Models\Holiday;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\HolidayResource;
+use App\Http\Resources\GroupResource;
+use App\Http\Resources\UserResource;
 
 class DepartmentResource extends JsonResource
 {
@@ -31,7 +33,7 @@ class DepartmentResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'bin' => $company_bin,
-            'owner' => new EmployeeResource($this->whenLoaded('owner')),
+            'owner' => new UserResource($this->whenLoaded('owner')),
             'groups' => GroupResource::collection($this->whenLoaded('groups')),
             'holidays' => HolidayResource::collection($holidays),
         ];

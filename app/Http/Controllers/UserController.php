@@ -26,6 +26,18 @@ class UserController extends Controller
             'data' => UserResource::collection($users),
         ], Response::HTTP_OK);
     }
+    public function managers()
+    {
+        $users = User::whereHas('roles', function ($query) {
+            $query->whereIn('name', ['manager']);
+        })->get();
+
+        // $users = User::paginate(10);
+        return new JsonResponse([
+            'message' => 'success',
+            'data' => UserResource::collection($users),
+        ], Response::HTTP_OK);
+    }
 
     function getAllRoles()
     {

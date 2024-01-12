@@ -46,6 +46,17 @@ class DepartmentController extends Controller
     //index with resource and pagination
     public function index()
     {
+
+        //check user role
+        $user = auth()->user();
+        $role = $user->roles->pluck('name');
+        if($role->contains('manager')) {
+            $departments = Department::with('owner', 'zams', 'groups')->where('owner_id', $user->id)->get();
+            return new JsonResponse([
+                'message' => 'success',
+                'data' => DepartmentResource::collection($departments),
+            ], Response::HTTP_OK);
+        }
         $departments = Department::with('owner', 'zams', 'groups')->get();
         return new JsonResponse([
             'message' => 'success',

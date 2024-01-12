@@ -29,7 +29,7 @@ class Department extends Model
 
     public function owner()
     {
-        return $this->belongsTo(Employee::class, 'owner_id');
+        return $this->belongsTo(User::class, 'owner_id');
     }
 
     //zams DepartmentEmployee

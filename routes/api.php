@@ -72,6 +72,7 @@ Route::middleware(['auth:sanctum', 'role:developer|manager|admin|hr|treasurer'])
 
     //users
     Route::get('/users/get', [\App\Http\Controllers\UserController::class, 'index']);
+    Route::get('/managers/get', [\App\Http\Controllers\UserController::class, 'managers']);
     Route::post('/users/create', [\App\Http\Controllers\UserController::class, 'store']);
     Route::post('/users/update', [\App\Http\Controllers\UserController::class, 'update']);
     Route::post('/users/delete', [\App\Http\Controllers\UserController::class, 'destroy']);
