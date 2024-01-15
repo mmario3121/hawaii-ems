@@ -8,7 +8,7 @@ use App\Models\Holiday;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\HolidayResource;
-use App\Http\Resources\GroupResource;
+// use App\Http\Resources\GroupResource;
 use App\Http\Resources\UserResource;
 
 class DepartmentResource extends JsonResource
