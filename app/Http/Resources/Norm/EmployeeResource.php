@@ -53,6 +53,7 @@ class EmployeeResource extends JsonResource
             'workdays_count' => $this->workdays_last_month($request->year_month),
             'norm' => $this->norm($request->year_month),
             'norm_worked' => $this->norm_worked($request->year_month),
+            'norm_days' => $this->norm_days($request->year_month),
             'hourly_rate' => $this->hourly_rate($request->year_month),
             'overtime' => $this->overtime($request->year_month),
             'overtime_salary' => $this->overtime_salary($request->year_month),

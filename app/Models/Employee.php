@@ -137,6 +137,18 @@ class Employee extends Model
             sum('workhours');
     }
 
+    //norm_days
+    public function norm_days($year_month)
+    {
+        $year_month = explode('-', $year_month);
+        $year = $year_month[0];
+        $month = $year_month[1];
+        return $this->workdays()->whereBetween('date', [
+            now()->startOfMonth()->setYear($year)->setMonth($month),
+            now()->endOfMonth()->setYear($year)->setMonth($month)
+            ])->where('isWorkday', '1')->count();
+    }
+
     public function hourly_rate($year_month)
     {
         return $this->salary_net / $this->norm($year_month);
