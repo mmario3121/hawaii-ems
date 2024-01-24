@@ -151,7 +151,8 @@ class Employee extends Model
 
     public function hourly_rate($year_month)
     {
-        return $this->salary_net / $this->norm($year_month);
+        //calculate hourly rate, round to 2 decimals
+        return round($this->salary_net / $this->norm($year_month), 2);
     }
 
     public function overtime_salary($year_month)
