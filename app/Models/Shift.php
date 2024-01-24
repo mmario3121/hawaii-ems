@@ -19,4 +19,23 @@ class Shift extends Model
         'vacation_days',
         'hours'
     ];
+
+    public function shift_hours()
+    {
+        // end_time - start_time - break
+        //end_time and start_time are hh:mm
+        //break is in hours
+        $start_time = explode(':', $this->start_time);
+        $end_time = explode(':', $this->end_time);
+        $break = $this->break;
+        $hours = $end_time[0] - $start_time[0] - $break;
+        $minutes = $end_time[1] - $start_time[1];
+        if($minutes < 0){
+            $hours--;
+            $minutes = 60 + $minutes;
+        }
+        return $hours . ':' . $minutes;
+    }
+
+
 }
