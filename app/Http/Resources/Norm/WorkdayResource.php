@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Tabel;
+namespace App\Http\Resources\Norm;
 
 use App\Http\Resources\AbsenceResource;
 use App\Http\Resources\HolidayResource;

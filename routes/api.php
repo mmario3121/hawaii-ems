@@ -58,6 +58,8 @@ Route::middleware(['auth:sanctum', 'role:developer|manager|admin|hr|treasurer'])
     //tabel
     Route::get('/tabel/get', [\App\Http\Controllers\TabelController::class, 'index']);
 
+    Route::get('/norm/get', [\App\Http\Controllers\TabelController::class, 'norm']);
+
     //workdays
     Route::get('/workdays/get', [\App\Http\Controllers\WorkdayController::class, 'index']);
     Route::post('/workdays/create', [\App\Http\Controllers\WorkdayController::class, 'store']);

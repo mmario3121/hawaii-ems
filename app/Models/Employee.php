@@ -125,6 +125,40 @@ class Employee extends Model
             ])->where('isWorkday', '1')->count() * 8;
     }
 
+    public function norm_worked($year_month)
+    {
+        $year_month = explode('-', $year_month);
+        $year = $year_month[0];
+        $month = $year_month[1];
+        return $this->workdays()->whereBetween('date', [
+            now()->startOfMonth()->setYear($year)->setMonth($month),
+            now()->endOfMonth()->setYear($year)->setMonth($month)
+            ])->where('isWorkday', '1')->
+            sum('workhours');
+    }
+
+    public function hourly_rate($year_month)
+    {
+        return $this->salary_net / $this->norm($year_month);
+    }
+
+    public function overtime($year_month)
+    {
+        $year_month = explode('-', $year_month);
+        $year = $year_month[0];
+        $month = $year_month[1];
+        return $this->workdays()->whereBetween('date', [
+            now()->startOfMonth()->setYear($year)->setMonth($month),
+            now()->endOfMonth()->setYear($year)->setMonth($month)
+            ])->where('isWorkday', '0')->
+            sum('workhours');
+    }
+
+    public function overtime_salary($year_month)
+    {
+        return $this->overtime($year_month) * $this->hourly_rate($year_month);
+    }
+
     public function getShiftId()
     {
         $shift = Shift::find($this->shift);
@@ -138,5 +172,10 @@ class Employee extends Model
         $shift = Shift::find($this->shift);
         if($shift) return $shift->name;
 
+    }
+
+    public function getShift(){
+        $shift = Shift::find($this->shift);
+        if($shift) return $shift;
     }
 }
