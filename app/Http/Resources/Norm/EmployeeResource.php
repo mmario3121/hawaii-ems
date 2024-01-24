@@ -43,7 +43,7 @@ class EmployeeResource extends JsonResource
             $norm_worked = $this->norm($request->year_month);
             $norm_salary = $norm_worked * $this->hourly_rate($request->year_month);
         } else {
-            $overtime = 0;
+            $overtime = $this->norm($request->year_month) - $this->workhours($request->year_month);
             $norm_worked = $this->workhours($request->year_month);
             $norm_salary = $norm_worked * $this->hourly_rate($request->year_month);
         }
