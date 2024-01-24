@@ -154,18 +154,6 @@ class Employee extends Model
         return $this->salary_net / $this->norm($year_month);
     }
 
-    public function overtime($year_month)
-    {
-        $year_month = explode('-', $year_month);
-        $year = $year_month[0];
-        $month = $year_month[1];
-        return $this->workdays()->whereBetween('date', [
-            now()->startOfMonth()->setYear($year)->setMonth($month),
-            now()->endOfMonth()->setYear($year)->setMonth($month)
-            ])->where('isWorkday', '0')->
-            sum('workhours');
-    }
-
     public function overtime_salary($year_month)
     {
         return $this->overtime($year_month) * $this->hourly_rate($year_month);

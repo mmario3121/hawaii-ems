@@ -38,6 +38,13 @@ class EmployeeResource extends JsonResource
         } else {
             $city_title = '';
         }
+        if($this->workhours($request->year_month) > $this->norm($request->year_month)) {
+            $overtime = $this->workhours($request->year_month) - $this->norm($request->year_month);
+            $norm_worked = $this->norm($request->year_month);
+        } else {
+            $overtime = 0;
+            $norm_worked = $this->workhours($request->year_month);
+        }
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -52,11 +59,11 @@ class EmployeeResource extends JsonResource
             'workhours_count' => $this->workhours($request->year_month),
             'workdays_count' => $this->workdays_last_month($request->year_month),
             'norm' => $this->norm($request->year_month),
-            'norm_worked' => $this->norm_worked($request->year_month),
+            'norm_worked' => $norm_worked,
             'norm_days' => $this->norm_days($request->year_month),
             'hourly_rate' => $this->hourly_rate($request->year_month),
-            'overtime' => $this->overtime($request->year_month),
-            'overtime_salary' => $this->overtime_salary($request->year_month),
+            'overtime' => $overtime,
+            'overtime_salary' => $overtime * $this->hourly_rate($request->year_month),
             'city' => $city_title,
             'address' => $this->address,
             'bin' => $bin,
