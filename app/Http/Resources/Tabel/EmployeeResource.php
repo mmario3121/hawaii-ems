@@ -57,7 +57,7 @@ class EmployeeResource extends JsonResource
             'address' => $this->address,
             'bin' => $bin,
             'shift_norm' => $this->getShift()->hours,
-            'norm_days' => $this->norm_days
+            'norm_days' => $this->norm_days($request->year_month),
         ];
     }
 }
