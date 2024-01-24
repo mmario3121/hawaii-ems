@@ -41,9 +41,11 @@ class EmployeeResource extends JsonResource
         if($this->workhours($request->year_month) > $this->norm($request->year_month)) {
             $overtime = $this->workhours($request->year_month) - $this->norm($request->year_month);
             $norm_worked = $this->norm($request->year_month);
+            $norm_salary = $norm_worked * $this->hourly_rate($request->year_month);
         } else {
             $overtime = 0;
             $norm_worked = $this->workhours($request->year_month);
+            $norm_salary = $norm_worked * $this->hourly_rate($request->year_month);
         }
         return [
             'id' => $this->id,
@@ -61,6 +63,7 @@ class EmployeeResource extends JsonResource
             'norm' => $this->norm($request->year_month),
             'norm_worked' => $norm_worked,
             'norm_days' => $this->norm_days($request->year_month),
+            'norm_salary' => $norm_salary,
             'hourly_rate' => $this->hourly_rate($request->year_month),
             'overtime' => $overtime,
             'overtime_salary' => $overtime * $this->hourly_rate($request->year_month),
