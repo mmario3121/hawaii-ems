@@ -23,6 +23,7 @@ class ShiftResource extends JsonResource
             'work_days' => $this->work_days,
             'vacation_days' => $this->vacation_days,
             'start_date' => $this->start_date,
+            'hours' => $this->hours,
         ];
     }
 }

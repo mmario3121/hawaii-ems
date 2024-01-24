@@ -17,5 +17,6 @@ class Shift extends Model
         'break',
         'work_days',
         'vacation_days',
+        'hours'
     ];
 }
