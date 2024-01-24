@@ -122,7 +122,7 @@ class Employee extends Model
         return $this->workdays()->whereBetween('date', [
             now()->startOfMonth()->setYear($year)->setMonth($month),
             now()->endOfMonth()->setYear($year)->setMonth($month)
-            ])->where('isWorkday', '1')->count() * 8;
+            ])->where('isWorkday', '1')->count() * $this->getShift()->shift_hours();
     }
 
     public function norm_worked($year_month)
