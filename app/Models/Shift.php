@@ -29,12 +29,7 @@ class Shift extends Model
         $end_time = explode(':', $this->end_time);
         $break = $this->break;
         $hours = $end_time[0] - $start_time[0] - $break;
-        $minutes = $end_time[1] - $start_time[1];
-        if($minutes < 0){
-            $hours--;
-            $minutes = 60 + $minutes;
-        }
-        return $hours . ':' . $minutes;
+        return $hours;
     }
 
 
