@@ -105,6 +105,13 @@ public function update(UpdateUserRequest $request)
             $user->image = $imageName;
             $user->save();
         }
+        if($request->role != null){
+            $role = Role::where('name', $request->role)->first();
+            if (!$role) {
+                    return response()->json(['error' => 'Role not found'], 404);
+                }
+            $user->syncRoles([$role->name]);
+        }
         return new JsonResponse([
             'message' => 'success',
         ], Response::HTTP_OK);
