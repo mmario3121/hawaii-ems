@@ -133,36 +133,44 @@ class EmployeeController extends Controller
         $endDate = Carbon::now()->endOfMonth();
         for ($date = Carbon::parse($startDate); $date->lte($endDate);) {
             // Check if a workday exists for the current date and employee
-            $existingWorkday = Workday::where('date', $date)
-                ->where('employee_id', $employee->id)
-                ->first();
+            
 
-            if ($existingWorkday) {
-                // If it exists, update it
-                $existingWorkday->update([
-                    'isWorkday' => 1, // Update other fields as needed
-                ]);
-                $date->addDay();
-            } else {
                 // If it doesn't exist, create a new one
                 for ($i = 0; $i < $workDays; $i++) {
-                    Workday::create([
-                        'date' => $date,
-                        'employee_id' => $employee->id,
-                        'isWorkday' => 1,
-                    ]);
+                    $existingWorkday = Workday::where('date', $date)
+                    ->where('employee_id', $employee->id)
+                    ->first();
+                    if ($existingWorkday) {
+                        $existingWorkday->update([
+                            'isWorkday' => 1,
+                        ]);
+                    }else{
+                        Workday::create([
+                            'date' => $date,
+                            'employee_id' => $employee->id,
+                            'isWorkday' => 1,
+                        ]);
+                    }
                     $date->addDay();
                 }
 
                 for ($i = 0; $i < $vacationDays; $i++) {
-                    Workday::create([
-                        'date' => $date,
-                        'employee_id' => $employee->id,
-                        'isWorkday' => 0,
-                    ]);
+                    $existingWorkday = Workday::where('date', $date)
+                    ->where('employee_id', $employee->id)
+                    ->first();
+                    if ($existingWorkday) {
+                        $existingWorkday->update([
+                            'isWorkday' => 0,
+                        ]);
+                    }else{
+                        Workday::create([
+                            'date' => $date,
+                            'employee_id' => $employee->id,
+                            'isWorkday' => 0,
+                        ]);
+                    }
                     $date->addDay();
                 }
-            }
         }
 
         return response()->json(['message' => 'Workdays generated successfully']);
