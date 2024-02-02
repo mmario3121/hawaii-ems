@@ -120,10 +120,13 @@ class Employee extends Model
         $year_month = explode('-', $year_month);
         $year = $year_month[0];
         $month = $year_month[1];
-        return $this->workdays()->whereBetween('date', [
-            now()->startOfMonth()->setYear($year)->setMonth($month),
-            now()->endOfMonth()->setYear($year)->setMonth($month)
-            ])->where('isWorkday', '1')->count() * $this->getShift()->shift_hours();
+
+        $startOfMonth = Carbon::create($year, $month, 1)->startOfDay();
+        $endOfMonth = Carbon::create($year, $month, 1)->endOfMonth()->endOfDay();
+
+
+        return $this->workdays()->whereBetween('date', [$startOfMonth, $endOfMonth])
+        ->where('isWorkday', '1')->count() * $this->getShift()->shift_hours();
     }
 
     public function norm_worked($year_month)
