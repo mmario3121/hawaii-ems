@@ -85,10 +85,10 @@ class Employee extends Model
         $year = $year_month[0];
         $month = $year_month[1];
        //calculate workhours from workdays last month
-        $workdays = $this->workdays()->whereBetween('date', [
-            now()->startOfMonth()->setYear($year)->setMonth($month),
-            now()->endOfMonth()->setYear($year)->setMonth($month)
-            ])->get();
+       $startOfMonth = Carbon::create($year, $month, 1)->startOfDay();
+        $endOfMonth = Carbon::create($year, $month, 1)->endOfMonth()->endOfDay();
+
+        $workdays = $this->workdays()->whereBetween('date', [$startOfMonth, $endOfMonth])->get();
         $workhours = 0;
         foreach ($workdays as $workday) {
             $workhours += $workday->workhours;
@@ -126,7 +126,6 @@ class Employee extends Model
 
 
         return $this->workdays()->whereBetween('date', [$startOfMonth, $endOfMonth])
-        ->whereNull('absence_id')
         ->where('isWorkday', '1')->count() * $this->getShift()->shift_hours();
     }
 
