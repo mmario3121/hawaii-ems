@@ -130,7 +130,7 @@ class Employee extends Model
 
         // Exclude holidays
 
-        if($this->getShift()->workdays == 5){
+        if($this->getShift()->work_days == 5){
             $holidays = Holiday::whereBetween('start_date', [$startOfMonth, $endOfMonth])
                 ->orWhereBetween('end_date', [$startOfMonth, $endOfMonth])
                 ->get();
