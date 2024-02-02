@@ -143,6 +143,13 @@ class Employee extends Model
         $year_month = explode('-', $year_month);
         $year = $year_month[0];
         $month = $year_month[1];
+
+        $startOfMonth = now()->startOfMonth()->setYear($year)->setMonth($month);
+        $endOfMonth = now()->endOfMonth()->setYear($year)->setMonth($month);
+    
+        // Output the start and end dates for debugging
+        dd($startOfMonth, $endOfMonth);
+        
         return $this->workdays()->whereBetween('date', [
             now()->startOfMonth()->setYear($year)->setMonth($month),
             now()->endOfMonth()->setYear($year)->setMonth($month)->endOfDay()
