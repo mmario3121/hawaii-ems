@@ -145,8 +145,8 @@ class Employee extends Model
         $month = $year_month[1];
         return $this->workdays()->whereBetween('date', [
             now()->startOfMonth()->setYear($year)->setMonth($month),
-            now()->endOfMonth()->setYear($year)->setMonth($month)
-            ])->where('isWorkday', '1')->count();
+            now()->endOfMonth()->setYear($year)->setMonth($month)->endOfDay()
+        ])->where('isWorkday', '1')->count();
     }
 
     public function hourly_rate($year_month)
