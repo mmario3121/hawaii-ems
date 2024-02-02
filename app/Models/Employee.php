@@ -124,9 +124,20 @@ class Employee extends Model
         $startOfMonth = Carbon::create($year, $month, 1)->startOfDay();
         $endOfMonth = Carbon::create($year, $month, 1)->endOfMonth()->endOfDay();
 
+        $workdays = $this->workdays()
+            ->whereBetween('date', [$startOfMonth, $endOfMonth])
+            ->where('isWorkday', '1');
 
-        return $this->workdays()->whereBetween('date', [$startOfMonth, $endOfMonth])
-        ->where('isWorkday', '1')->count() * $this->getShift()->shift_hours();
+        // Exclude holidays
+        $holidays = Holiday::whereBetween('start_date', [$startOfMonth, $endOfMonth])
+            ->orWhereBetween('end_date', [$startOfMonth, $endOfMonth])
+            ->get();
+
+        foreach ($holidays as $holiday) {
+            $workdays->whereNotBetween('date', [$holiday->start_date, $holiday->end_date]);
+        }
+
+        return $workdays->count() * $this->getShift()->shift_hours();
     }
 
     public function norm_worked($year_month)
