@@ -49,7 +49,11 @@ class EmployeeResource extends JsonResource
             $overtime = 0;
         }
         $norm_salary = number_format($norm_worked * $this->hourly_rate($request->year_month), 2, '.', '');
+
+        //overtime_salary integer
         $overtime_salary = number_format($overtime * $this->hourly_rate($request->year_month), 2, '.', '');
+        //round to integer
+        $overtime_salary = round($overtime_salary);
         return [
             'id' => $this->id,
             'name' => $this->name,
