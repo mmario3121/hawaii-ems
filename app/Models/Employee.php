@@ -148,7 +148,7 @@ class Employee extends Model
         $startOfMonth = Carbon::create($year, $month, 1)->startOfDay();
         $endOfMonth = Carbon::create($year, $month, 1)->endOfMonth()->endOfDay();
 
-        dd($startOfMonth, $endOfMonth);
+        // dd($startOfMonth, $endOfMonth);
 
         return $this->workdays()->whereBetween('date', [$startOfMonth, $endOfMonth])
                                 ->where('isWorkday', '1')->count();
