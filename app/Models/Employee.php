@@ -126,6 +126,7 @@ class Employee extends Model
 
 
         return $this->workdays()->whereBetween('date', [$startOfMonth, $endOfMonth])
+        ->whereNull('absence_id')
         ->where('isWorkday', '1')->count() * $this->getShift()->shift_hours();
     }
 
