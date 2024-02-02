@@ -141,4 +141,14 @@ public function update(UpdateUserRequest $request)
             'message' => 'success',
         ], Response::HTTP_OK);
     }
+
+    //destroy roles
+
+    public function destroyRole(Request $request){
+        $role = Role::find($request->id);
+        $role->delete();
+        return new JsonResponse([
+            'message' => 'success',
+        ], Response::HTTP_OK);
+    }
 }

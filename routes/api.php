@@ -81,6 +81,7 @@ Route::middleware(['auth:sanctum', 'role:developer|manager|admin|hr|treasurer'])
     Route::post('/users/set-image', [\App\Http\Controllers\UserController::class, 'setImage']);
 
     Route::get('/roles/get', [\App\Http\Controllers\UserController::class, 'getAllRoles']);
+    Route::post('/roles/delete', [\App\Http\Controllers\UserController::class, 'destroyRole']);
     Route::post('/roles/assign', [\App\Http\Controllers\UserController::class, 'assignRole']);
 
     //shifts
