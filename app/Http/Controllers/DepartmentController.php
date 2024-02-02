@@ -37,6 +37,11 @@ class DepartmentController extends Controller
     public function destroy(Request $request)
     {
         $department = Department::find($request->id);
+        $department->groups()->delete();
+        $department->employees->each(function($employee) {
+            $employee->workdays()->delete();
+        });
+        $department->employees()->delete();
         $department->delete();
         return new JsonResponse([
             'message' => 'success',
