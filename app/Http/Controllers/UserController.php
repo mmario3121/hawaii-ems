@@ -42,7 +42,10 @@ class UserController extends Controller
     function getAllRoles()
     {
         // Get all roles
-        $roles = Role::select('id', 'name')->get();
+        $roles = Role::select('id', 'name')
+        ->whereNot('name', 'developer')
+        ->whereNot('name', 'treasurer')
+        ->get();
 
         return $roles;
     }
