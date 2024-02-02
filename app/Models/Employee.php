@@ -129,12 +129,15 @@ class Employee extends Model
             ->where('isWorkday', '1');
 
         // Exclude holidays
-        $holidays = Holiday::whereBetween('start_date', [$startOfMonth, $endOfMonth])
-            ->orWhereBetween('end_date', [$startOfMonth, $endOfMonth])
-            ->get();
 
-        foreach ($holidays as $holiday) {
-            $workdays->whereNotBetween('date', [$holiday->start_date, $holiday->end_date]);
+        if($this->getShift()->workdays == 5){
+            $holidays = Holiday::whereBetween('start_date', [$startOfMonth, $endOfMonth])
+                ->orWhereBetween('end_date', [$startOfMonth, $endOfMonth])
+                ->get();
+
+            foreach ($holidays as $holiday) {
+                $workdays->whereNotBetween('date', [$holiday->start_date, $holiday->end_date]);
+            }
         }
 
         return $workdays->count() * $this->getShift()->shift_hours();
