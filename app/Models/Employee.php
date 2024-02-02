@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Employee extends Model
 {
@@ -144,16 +145,11 @@ class Employee extends Model
         $year = $year_month[0];
         $month = $year_month[1];
 
-        $startOfMonth = now()->startOfMonth()->setYear($year)->setMonth($month);
-        $endOfMonth = now()->endOfMonth()->setYear($year)->setMonth($month);
-    
-        // Output the start and end dates for debugging
-        dd($startOfMonth, $endOfMonth);
-        
-        return $this->workdays()->whereBetween('date', [
-            now()->startOfMonth()->setYear($year)->setMonth($month),
-            now()->endOfMonth()->setYear($year)->setMonth($month)->endOfDay()
-        ])->where('isWorkday', '1')->count();
+        $startOfMonth = Carbon::create($year, $month, 1)->startOfDay();
+        $endOfMonth = Carbon::create($year, $month, 1)->endOfMonth()->endOfDay();
+
+        return $this->workdays()->whereBetween('date', [$startOfMonth, $endOfMonth])
+                                ->where('isWorkday', '1')->count();
     }
 
     public function hourly_rate($year_month)
