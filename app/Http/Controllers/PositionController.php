@@ -13,7 +13,7 @@ class PositionController extends Controller
     //
     public function index()
     {
-        $positions = Position::paginate(10);
+        $positions = Position::all();
         return new JsonResponse([
             'message' => 'success',
             'data' => PositionResource::collection($positions),
