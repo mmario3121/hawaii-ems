@@ -16,7 +16,7 @@ class CompanyController extends Controller
     //
     public function index()
     {
-        $companies = Company::paginate(10);
+        $companies = Company::all();
         return new JsonResponse([
             'message' => 'success',
             'data' => CompanyResource::collection($companies),
