@@ -12,12 +12,14 @@ class GroupResource extends JsonResource
      *
      * @return array<string, mixed>
      */
+    
     public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'department_id' => $this->department_id,
+            'departments' => $this->departments,
+
         ];
     }
 }

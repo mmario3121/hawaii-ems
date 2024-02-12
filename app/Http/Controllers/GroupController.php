@@ -18,6 +18,7 @@ class GroupController extends Controller
     public function index()
     {
         $groups = Group::all();
+        $groups->load('departments');
         return new JsonResponse([
             'message' => 'success',
             'data' => GroupResource::collection($groups),
