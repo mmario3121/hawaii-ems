@@ -14,9 +14,9 @@ class Group extends Model
         'name'
     ];
 
-    public function department()
+    public function departments()
     {
-        return $this->belongsTo(Department::class);
+        return $this->belongsToMany(Department::class);
     }
 
     public function employees()

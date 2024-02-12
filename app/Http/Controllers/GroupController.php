@@ -24,10 +24,13 @@ class GroupController extends Controller
         ], Response::HTTP_OK);
     }    
 
-    public function store(StoreGroupRequest $request)
+    public function store(Request $request)
     {
-        $validated = $request->validated();
-        $group = Group::create($validated);
+        $group = new Group;
+        $group->name = $request->name;
+        $group->save();
+        $departmentIds = explode(',', $request->departments);
+        $group->departments()->sync($departmentIds);
         return new JsonResponse([
             'message' => 'success',
         ], Response::HTTP_OK);
@@ -36,7 +39,12 @@ class GroupController extends Controller
     public function update(UpdateGroupRequest $request)
     {
         $group = Group::find($request->id);
-        $group->update($request->all());
+        $group->name = $request->name;
+        $group->save();
+    
+        $departmentIds = explode(',', $request->departments);
+
+        $group->departments()->sync($departmentIds);
         return new JsonResponse([
             'message' => 'success',
         ], Response::HTTP_OK);
