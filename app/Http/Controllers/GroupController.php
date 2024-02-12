@@ -36,7 +36,7 @@ class GroupController extends Controller
         ], Response::HTTP_OK);
     }
 
-    public function update(UpdateGroupRequest $request)
+    public function update(Request $request)
     {
         $group = Group::find($request->id);
         $group->name = $request->name;
