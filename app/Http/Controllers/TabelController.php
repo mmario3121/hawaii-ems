@@ -39,6 +39,9 @@ class TabelController extends Controller
         [$year, $month] = explode('-', $yearMonth);
 
     $department = Department::with([
+        'groups.employees' => function ($query) use ($request) {
+            $query->where('department_id', $request->department_id);
+        },
         'groups.employees.workdays' => function ($query) use ($year, $month) {
             $query->whereYear('date', $year)
                   ->whereMonth('date', $month);
