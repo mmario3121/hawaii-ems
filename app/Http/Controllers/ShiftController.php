@@ -16,7 +16,7 @@ class ShiftController extends Controller
     //
     public function index()
     {
-        $shifts = Shift::paginate(10);
+        $shifts = Shift::all();
         return new JsonResponse([
             'message' => 'success',
             'data' => ShiftResource::collection($shifts),
