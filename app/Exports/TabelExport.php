@@ -1,12 +1,9 @@
 <?php
-
 namespace App\Exports;
 
-use App\Models\Employee;
+use App\Models\Employee; // Your Employee model
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Events\AfterSheet;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class TabelExport implements FromCollection, WithHeadings
@@ -15,81 +12,64 @@ class TabelExport implements FromCollection, WithHeadings
     protected $year;
     protected $month;
 
+    /**
+     * Accept department, year, and month for filtering.
+     */
     public function __construct($departmentId, $year, $month)
     {
         $this->departmentId = $departmentId;
         $this->year = $year;
         $this->month = $month;
     }
-
     public function collection()
     {
+        // Convert year and month to a date range
         $startDate = Carbon::createFromDate($this->year, $this->month, 1, 'Asia/Almaty');
         $endDate = $startDate->copy()->endOfMonth();
 
-        $employees = Employee::where('department_id', $this->departmentId)
+        // Adjust the query as per your actual database structure and needs
+        return Employee::where('department_id', $this->departmentId)
             ->with(['workdays' => function ($query) use ($startDate, $endDate) {
                 $query->whereBetween('date', [$startDate, $endDate])
-                    ->select('id', 'employee_id', 'date', 'workhours', 'isWorkday');
-            }])
-            ->get();
+                    ->select('id', 'employee_id', 'date', 'workhours'); // select only required fields
+            }])->get()->map(function ($employee) {
+                $row = [
+                    'Employee ID' => $employee->id,
+                    'Name' => $employee->name,
+                    // Include other employee attributes here
+                ];
 
-        $data = [];
+                // Append each workday's data
+                foreach ($employee->workdays as $workday) {
+                    $row[$workday->date] = $workday->workhours;
+                }
 
-        foreach ($employees as $employee) {
-            $row = [
-                'Employee ID' => $employee->id,
-                'Name' => $employee->name,
-            ];
-
-            foreach ($employee->workdays as $workday) {
-                $value = $workday->workhours;
-                $style = ['font' => ['color' => ($workday->isWorkday == 1) ? ['argb' => 'FF008000'] : ['argb' => 'FF808080']]];
-                $data[] = array_merge($row, [$workday->date => $value], [$workday->date . '_style' => $style]);
-            }
-        }
-
-        return collect($data);
+                return $row;
+            });
     }
 
+    /**
+     * Define column headings for the Excel file.
+     * This should match the structure of the collection.
+     */
     public function headings(): array
     {
+        // Start with static employee headings
         $headings = [
             'Employee ID',
             'Name',
+            // Add other static employee attribute headings
         ];
 
+        // Generate date range for the specified month and year
         $startDate = Carbon::createFromDate($this->year, $this->month, 1);
         $endDate = $startDate->copy()->endOfMonth();
 
         while ($startDate->lte($endDate)) {
-            $headings[] = $startDate->toDateString();
+            $headings[] = $startDate->toDateString(); // Add each date of the month as a heading
             $startDate->addDay();
         }
 
         return $headings;
-    }
-
-    public function registerEvents(): array
-    {
-        return [
-            AfterSheet::class => function (AfterSheet $event) {
-                $sheet = $event->sheet;
-
-                foreach ($sheet->getRowIterator() as $row) {
-                    foreach ($row->getCellIterator() as $cell) {
-                        $cellValue = $cell->getValue();
-                        $cellColumn = $cell->getColumn();
-                        $cellStyle = $sheet->getStyle($cellColumn . $cell->getRow());
-                        
-                        // Check if style data is available for this cell
-                        if (isset($this->styleData[$cellValue . '_style'])) {
-                            $style = $this->styleData[$cellValue . '_style'];
-                            $cellStyle->applyFromArray($style);
-                        }
-                    }
-                }
-            },
-        ];
     }
 }
