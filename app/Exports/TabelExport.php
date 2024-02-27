@@ -2,13 +2,12 @@
 namespace App\Exports;
 
 use App\Models\Employee; // Your Employee model
-use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Carbon\Carbon;
+use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
-use Carbon\Carbon;
-use Maatwebsite\Excel\Sheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet; 
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class TabelExport implements FromCollection, WithHeadings, WithStyles
 {
@@ -32,38 +31,35 @@ class TabelExport implements FromCollection, WithHeadings, WithStyles
         $endDate = $startDate->copy()->endOfMonth();
 
         // Adjust the query as per your actual database structure and needs
-         return Employee::where('department_id', $this->departmentId)
-         ->with(['workdays' => function ($query) use ($startDate, $endDate) {
-             $query->whereBetween('date', [$startDate, $endDate])
-                 ->select('id', 'employee_id', 'date', 'workhours', 'isWorkday'); // select only required fields
-         }])->get()->map(function ($employee) {
-             $row = [
-                 'Employee ID' => $employee->id,
-                 'Name' => $employee->name,
-                 // Include other employee attributes here
-             ];
+        return Employee::where('department_id', $this->departmentId)
+            ->with(['workdays' => function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('date', [$startDate, $endDate])
+                    ->select('id', 'employee_id', 'date', 'workhours', 'isWorkday'); // select only required fields
+            }])->get()->map(function ($employee) {
+                $row = [
+                    'Employee ID' => $employee->id,
+                    'Name' => $employee->name,
+                    // Include other employee attributes here
+                ];
 
-             // Append each workday's data
-             foreach ($employee->workdays as $workday) {
-                 // Set cell background color based on isWorkday value
-                 $cellColor = $workday->isWorkday ? '#00FF00' : '#C0C0C0'; // Green for workday, grey otherwise
-                 $row[$workday->date] = [
-                     'value' => $workday->workhours,
-                     'style' => [
-                         'fill' => [
-                             'fillType' => Fill::FILL_SOLID,
-                             'startColor' => [
-                                 'rgb' => $cellColor,
-                             ],
-                         ],
-                     ],
-                 ];
-             }
+                // Append each workday's data
+                foreach ($employee->workdays as $workday) {
+                    // Set cell background color based on isWorkday value
+                    $cellColor = $workday->isWorkday ? '#00FF00' : '#C0C0C0'; // Green for workday, grey otherwise
+                    $row[$workday->date] = $workday->workhours;
+                    $row[$workday->date . '_style'] = [
+                        'fill' => [
+                            'fillType' => Fill::FILL_SOLID,
+                            'startColor' => [
+                                'rgb' => $cellColor,
+                            ],
+                        ],
+                    ];
+                }
 
-             return $row;
-         });
+                return $row;
+            });
     }
-
     /**
      * Define column headings for the Excel file.
      * This should match the structure of the collection.
