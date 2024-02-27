@@ -24,14 +24,13 @@ class TabelExport implements FromCollection, WithHeadings
     public function collection()
     {
         // Convert year and month to a date range
-        $startDate = Carbon::createFromDate($this->year, $this->month, 1);
+        $startDate = Carbon::createFromDate($this->year, $this->month, 1, 'Asia/Almaty');
         $endDate = $startDate->copy()->endOfMonth();
 
-        // Adjust the query as per your actual database structure and needs
         return Employee::where('department_id', $this->departmentId)
             ->with(['workdays' => function ($query) use ($startDate, $endDate) {
                 $query->whereBetween('date', [$startDate, $endDate])
-                    ->select('id', 'employee_id', 'date', 'workhours'); // select only required fields
+                    ->select('id', 'employee_id', 'date', 'workhours', 'isWorkday'); // select only required fields
             }])->get()->map(function ($employee) {
                 $row = [
                     'Employee ID' => $employee->id,
@@ -41,7 +40,19 @@ class TabelExport implements FromCollection, WithHeadings
 
                 // Append each workday's data
                 foreach ($employee->workdays as $workday) {
-                    $row[$workday->date] = $workday->workhours;
+                    // Set cell background color based on isWorkday value
+                    $cellColor = $workday->isWorkday ? '#00FF00' : '#C0C0C0'; // Green for workday, grey otherwise
+                    $row[$workday->date] = [
+                        'value' => $workday->workhours,
+                        'style' => [
+                            'fill' => [
+                                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                                'startColor' => [
+                                    'rgb' => $cellColor,
+                                ],
+                            ],
+                        ],
+                    ];
                 }
 
                 return $row;
