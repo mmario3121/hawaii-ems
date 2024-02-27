@@ -4,7 +4,7 @@ namespace App\Exports;
 use App\Models\Employee; // Your Employee model
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Carbon\CarbonImmutable; // Use CarbonImmutable for better immutability
+use Carbon\Carbon;
 
 class TabelExport implements FromCollection, WithHeadings
 {
@@ -24,7 +24,7 @@ class TabelExport implements FromCollection, WithHeadings
     public function collection()
     {
         // Convert year and month to a date range
-        $startDate = CarbonImmutable::createFromDate($this->year, $this->month, 1, 'Asia/Almaty');
+        $startDate = Carbon::createFromDate($this->year, $this->month, 1, 'Asia/Almaty');
         $endDate = $startDate->copy()->endOfMonth();
 
         // Adjust the query as per your actual database structure and needs
@@ -62,7 +62,7 @@ class TabelExport implements FromCollection, WithHeadings
         ];
 
         // Generate date range for the specified month and year
-        $startDate = CarbonImmutable::createFromDate($this->year, $this->month, 1, 'Asia/Almaty');
+        $startDate = Carbon::createFromDate($this->year, $this->month, 1, 'Asia/Almaty');
         $endDate = $startDate->copy()->endOfMonth();
 
         while ($startDate->lte($endDate)) {
