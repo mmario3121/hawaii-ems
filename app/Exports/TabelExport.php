@@ -41,7 +41,7 @@ class TabelExport implements FromCollection, WithHeadings
 
                 // Append each workday's data
                 foreach ($employee->workdays as $workday) {
-                    $row[$workday->date] = $workday->workhours;
+                    $row[$workday->date->modify('+1 day')->toDateString()] = $workday->workhours;
                 }
 
                 return $row;
