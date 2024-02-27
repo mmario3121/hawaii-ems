@@ -8,6 +8,7 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Sheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet; 
 
 class TabelExport implements FromCollection, WithHeadings, WithStyles
 {
@@ -88,7 +89,7 @@ class TabelExport implements FromCollection, WithHeadings, WithStyles
         return $headings;
     }
 
-    public function styles(Sheet $sheet)
+    public function styles(Worksheet $sheet)
     {
         return [
             // Style the headers (first row)
