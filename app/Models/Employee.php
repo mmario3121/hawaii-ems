@@ -10,6 +10,8 @@ class Employee extends Model
 {
     use HasFactory;
 
+    protected $dates = ['date'];
+
     //fillable
 
     protected $fillable = [
