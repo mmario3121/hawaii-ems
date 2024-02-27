@@ -25,7 +25,7 @@ class TabelExport implements FromCollection, WithHeadings
     public function collection()
     {
         // Convert year and month to a date range
-        $startDate = Carbon::createFromDate($this->year, $this->month, 1, 'Asia/Almaty');
+        $startDate = Carbon::createMidnightDate($this->year, $this->month, 1, 'Asia/Almaty');
         $endDate = $startDate->copy()->endOfMonth();
         dd($startDate);
         // dd(Workday::where('employee_id', 69)->where('date', '>=', $startDate) // Include start date
@@ -67,7 +67,7 @@ class TabelExport implements FromCollection, WithHeadings
         ];
 
         // Generate date range for the specified month and year
-        $startDate = Carbon::createFromDate($this->year, $this->month, 1, 'Asia/Almaty');
+        $startDate = Carbon::createMidnightDate($this->year, $this->month, 1, 'Asia/Almaty');
         $endDate = $startDate->copy()->endOfMonth();
 
         while ($startDate->lte($endDate)) {
