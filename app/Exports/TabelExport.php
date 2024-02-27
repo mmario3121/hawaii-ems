@@ -22,36 +22,34 @@ class TabelExport implements FromCollection, WithHeadings, WithConditionalFormat
     }
 
     public function collection()
-    {
-        $startDate = Carbon::createFromDate($this->year, $this->month, 1, 'Asia/Almaty');
-        $endDate = $startDate->copy()->endOfMonth();
+{
+    $startDate = Carbon::createFromDate($this->year, $this->month, 1, 'Asia/Almaty');
+    $endDate = $startDate->copy()->endOfMonth();
 
-        return Employee::where('department_id', $this->departmentId)
-            ->with(['workdays' => function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('date', [$startDate, $endDate])
-                    ->select('id', 'employee_id', 'date', 'workhours', 'isWorkday');
-            }])
-            ->get()
-            ->map(function ($employee) use ($startDate, $endDate) {
-                $row = [
-                    'Employee ID' => $employee->id,
-                    'Name' => $employee->name,
+    return Employee::where('department_id', $this->departmentId)
+        ->with(['workdays' => function ($query) use ($startDate, $endDate) {
+            $query->whereBetween('date', [$startDate, $endDate])
+                ->select('id', 'employee_id', 'date', 'workhours', 'isWorkday');
+        }])
+        ->get()
+        ->map(function ($employee) use ($startDate, $endDate) {
+            $row = [
+                'Employee ID' => $employee->id,
+                'Name' => $employee->name,
+            ];
+
+            foreach ($employee->workdays as $workday) {
+                $style = ['font' => ['color' => ($workday->isWorkday == 1) ? ['argb' => 'FF008000'] : ['argb' => 'FF808080']]];
+                $row[$workday->date] = [
+                    'value' => $workday->workhours,
+                    'style' => $style,
                 ];
+            }
 
-                foreach ($employee->workdays as $workday) {
-                    $row[$workday->date] = [
-                        'value' => $workday->workhours,
-                        'style' => [
-                            'font' => [
-                                'color' => $workday->isWorkday == 1 ? ['argb' => 'FF008000'] : ['argb' => 'FF808080'],
-                            ],
-                        ],
-                    ];
-                }
+            return $row;
+        });
+}
 
-                return $row;
-            });
-    }
 
     public function headings(): array
     {
