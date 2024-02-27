@@ -4,10 +4,11 @@ namespace App\Exports;
 use App\Models\Employee; // Your Employee model
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Events\AfterSheet;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 use Carbon\Carbon;
 
-class TabelExport implements FromCollection, WithHeadings
+class TabelExport implements FromCollection, WithHeadings, WithStyles
 {
     protected $departmentId;
     protected $year;
@@ -28,36 +29,37 @@ class TabelExport implements FromCollection, WithHeadings
         $startDate = Carbon::createFromDate($this->year, $this->month, 1, 'Asia/Almaty');
         $endDate = $startDate->copy()->endOfMonth();
 
-        return Employee::where('department_id', $this->departmentId)
-            ->with(['workdays' => function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('date', [$startDate, $endDate])
-                    ->select('id', 'employee_id', 'date', 'workhours', 'isWorkday'); // select only required fields
-            }])->get()->map(function ($employee) {
-                $row = [
-                    'Employee ID' => $employee->id,
-                    'Name' => $employee->name,
-                    // Include other employee attributes here
-                ];
+        // Adjust the query as per your actual database structure and needs
+         return Employee::where('department_id', $this->departmentId)
+         ->with(['workdays' => function ($query) use ($startDate, $endDate) {
+             $query->whereBetween('date', [$startDate, $endDate])
+                 ->select('id', 'employee_id', 'date', 'workhours', 'isWorkday'); // select only required fields
+         }])->get()->map(function ($employee) {
+             $row = [
+                 'Employee ID' => $employee->id,
+                 'Name' => $employee->name,
+                 // Include other employee attributes here
+             ];
 
-                // Append each workday's data
-                foreach ($employee->workdays as $workday) {
-                    // Set cell background color based on isWorkday value
-                    $cellColor = $workday->isWorkday ? '#00FF00' : '#C0C0C0'; // Green for workday, grey otherwise
-                    $row[$workday->date] = [
-                        'value' => $workday->workhours,
-                        'style' => [
-                            'fill' => [
-                                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                                'startColor' => [
-                                    'rgb' => $cellColor,
-                                ],
-                            ],
-                        ],
-                    ];
-                }
+             // Append each workday's data
+             foreach ($employee->workdays as $workday) {
+                 // Set cell background color based on isWorkday value
+                 $cellColor = $workday->isWorkday ? '#00FF00' : '#C0C0C0'; // Green for workday, grey otherwise
+                 $row[$workday->date] = [
+                     'value' => $workday->workhours,
+                     'style' => [
+                         'fill' => [
+                             'fillType' => Fill::FILL_SOLID,
+                             'startColor' => [
+                                 'rgb' => $cellColor,
+                             ],
+                         ],
+                     ],
+                 ];
+             }
 
-                return $row;
-            });
+             return $row;
+         });
     }
 
     /**
@@ -85,16 +87,14 @@ class TabelExport implements FromCollection, WithHeadings
         return $headings;
     }
 
-    public function registerEvents(): array
+    public function styles(Worksheet $sheet)
     {
         return [
-            AfterSheet::class => function (AfterSheet $event) {
-                $event->sheet->getStyle('A1:Z1')->applyFromArray([
-                    'font' => [
-                        'bold' => true,
-                    ],
-                ]);
-            },
+            // Style the headers (first row)
+            1 => [
+                // Style the range of columns A to Z (adjust as per your needs)
+                'font' => ['bold' => true], // Make the font bold
+            ],
         ];
     }
 }
