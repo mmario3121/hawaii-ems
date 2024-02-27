@@ -27,9 +27,11 @@ class TabelExport implements FromCollection, WithHeadings
         // Convert year and month to a date range
         $startDate = Carbon::createFromDate($this->year, $this->month, 1, 'Asia/Almaty');
         $endDate = $startDate->copy()->endOfMonth();
-        dd(Workday::where('employee_id', 69)->where('date', '>=', $startDate) // Include start date
-        ->where('date', '<=', $endDate)   // and end date
-        ->select('id', 'employee_id', 'date', 'workhours')->get());
+        dd($startDate);
+        // dd(Workday::where('employee_id', 69)->where('date', '>=', $startDate) // Include start date
+        // ->where('date', '<=', $endDate)   // and end date
+        // ->select('id', 'employee_id', 'date', 'workhours')->get());
+
         // Adjust the query as per your actual database structure and needs
         return Employee::where('department_id', $this->departmentId)
             ->with(['workdays' => function ($query) use ($startDate, $endDate) {
