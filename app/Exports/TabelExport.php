@@ -4,6 +4,7 @@ namespace App\Exports;
 use App\Models\Employee; // Your Employee model
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Events\AfterSheet;
 use Carbon\Carbon;
 
 class TabelExport implements FromCollection, WithHeadings
@@ -82,5 +83,18 @@ class TabelExport implements FromCollection, WithHeadings
         }
 
         return $headings;
+    }
+
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class => function (AfterSheet $event) {
+                $event->sheet->getStyle('A1:Z1')->applyFromArray([
+                    'font' => [
+                        'bold' => true,
+                    ],
+                ]);
+            },
+        ];
     }
 }
