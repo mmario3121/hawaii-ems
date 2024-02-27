@@ -5,10 +5,9 @@ namespace App\Exports;
 use App\Models\Employee;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\WithConditionalFormatting;
 use Carbon\Carbon;
 
-class TabelExport implements FromCollection, WithHeadings, WithConditionalFormatting
+class TabelExport implements FromCollection, WithHeadings
 {
     protected $departmentId;
     protected $year;
