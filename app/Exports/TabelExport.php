@@ -2,6 +2,7 @@
 namespace App\Exports;
 
 use App\Models\Employee; // Your Employee model
+use App\Models\Workday;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Carbon\Carbon;
@@ -26,11 +27,8 @@ class TabelExport implements FromCollection, WithHeadings
         // Convert year and month to a date range
         $startDate = Carbon::createFromDate($this->year, $this->month, 1, 'Asia/Almaty');
         $endDate = $startDate->copy()->endOfMonth();
-        dd(Employee::where('department_id', $this->departmentId)
-        ->with(['workdays' => function ($query) use ($startDate, $endDate) {
-            $query->whereBetween('date', [$startDate, $endDate])
-                ->select('id', 'employee_id', 'date', 'workhours'); // select only required fields
-        }])->get());
+        dd(Workday::where('employee_id', 69)->whereBetween('date', [$startDate, $endDate])
+                ->select('id', 'employee_id', 'date', 'workhours')->get());
         // Adjust the query as per your actual database structure and needs
         return Employee::where('department_id', $this->departmentId)
             ->with(['workdays' => function ($query) use ($startDate, $endDate) {
