@@ -28,7 +28,7 @@ class UpdateEmployeeRequest extends FormRequest
             'phone' => 'required|max:255',
             'position_id' => 'required|integer',
             'iin' => 'nullable|max:255',
-            'email' => 'required|max:255',
+            'email' => 'max:255',
             // 'company_id' => 'required|integer',
             'shift' => 'required|max:255',
             'department_id' => 'required|integer',
@@ -37,6 +37,7 @@ class UpdateEmployeeRequest extends FormRequest
             'group_id' => '',
             'number' => '',
             'bin' => 'max:255',
+            'address' => 'max:255',
         ];
     }
 }

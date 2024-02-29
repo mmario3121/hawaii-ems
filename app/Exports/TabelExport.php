@@ -24,15 +24,9 @@ class TabelExport implements FromCollection, WithHeadings
     }
     public function collection()
     {
-        // Convert year and month to a date range
         $startDate = Carbon::createMidnightDate($this->year, $this->month, 1, 'Asia/Almaty');
         $endDate = $startDate->copy()->endOfMonth();
-        // dd($startDate);
-        // dd(Workday::where('employee_id', 69)->where('date', '>=', $startDate) // Include start date
-        // ->where('date', '<=', $endDate)   // and end date
-        // ->select('id', 'employee_id', 'date', 'workhours')->get());
 
-        // Adjust the query as per your actual database structure and needs
         return Employee::where('department_id', $this->departmentId)
             ->with(['workdays' => function ($query) use ($startDate, $endDate) {
                 $query->whereBetween('date', [$startDate, $endDate])
@@ -48,7 +42,13 @@ class TabelExport implements FromCollection, WithHeadings
                 foreach ($employee->workdays as $workday) {
                     $row[$workday->date] = $workday->workhours;
                 }
-
+                $year_month = $this->year . '-' . $this->month;
+                $row['Days'] = $employee->workdays_last_month($year_month);
+                $row['Hours'] = $employee->workhours($year_month);
+                $row['Norm'] = $employee->norm($year_month);
+                $row['Bin'] = $employee->company->bin;
+                $row['+/-'] = $employee->norm($year_month) - $employee->workhours($year_month);
+                $row['Company'] = $employee->company->name;
                 return $row;
             });
     }
