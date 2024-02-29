@@ -46,8 +46,8 @@ class TabelExport implements FromCollection, WithHeadings
                 $row['Days'] = $employee->workdays_last_month($year_month);
                 $row['Hours'] = $employee->workhours($year_month);
                 $row['Norm'] = $employee->norm($year_month);
-                $row['Bin'] = $employee->company->bin;
                 $row['+/-'] = $employee->norm($year_month) - $employee->workhours($year_month);
+                $row['Bin'] = $employee->company->bin;
                 $row['Company'] = $employee->company->name;
                 return $row;
             });
@@ -74,6 +74,12 @@ class TabelExport implements FromCollection, WithHeadings
             $headings[] = $startDate->toDateString(); // Add each date of the month as a heading
             $startDate->addDay();
         }
+        $headings[] = 'Days';
+        $headings[] = 'Hours';
+        $headings[] = 'Norm';
+        $headings[] = '+/-';
+        $headings[] = 'Bin';
+        $headings[] = 'Company';
 
         return $headings;
     }
