@@ -48,7 +48,7 @@ class TabelExport implements FromCollection, WithHeadings
                 $row['Norm'] = $employee->norm($year_month);
                 $row['+/-'] = $employee->norm($year_month) - $employee->workhours($year_month);
                 $row['Bin'] = $employee->company->bin;
-                $row['Company'] = $employee->company->name;
+                $row['Company'] = $employee->company->title;
                 return $row;
             });
     }
@@ -61,8 +61,8 @@ class TabelExport implements FromCollection, WithHeadings
     {
         // Start with static employee headings
         $headings = [
-            'Employee ID',
-            'Name',
+            'ID',
+            'ФИО',
             // Add other static employee attribute headings
         ];
 
@@ -74,12 +74,12 @@ class TabelExport implements FromCollection, WithHeadings
             $headings[] = $startDate->toDateString(); // Add each date of the month as a heading
             $startDate->addDay();
         }
-        $headings[] = 'Days';
-        $headings[] = 'Hours';
-        $headings[] = 'Norm';
+        $headings[] = 'Дни';
+        $headings[] = 'Часы';
+        $headings[] = 'Норма';
         $headings[] = '+/-';
-        $headings[] = 'Bin';
-        $headings[] = 'Company';
+        $headings[] = 'БИН';
+        $headings[] = 'Компания';
 
         return $headings;
     }
