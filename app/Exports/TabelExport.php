@@ -30,6 +30,7 @@ class TabelExport implements FromCollection, WithHeadings
         return Employee::where('department_id', $this->departmentId)
             ->with(['workdays' => function ($query) use ($startDate, $endDate) {
                 $query->whereBetween('date', [$startDate, $endDate])
+                    ->with('absence')
                     ->select('id', 'employee_id', 'date', 'workhours'); // select only required fields
             }])->get()->map(function ($employee) {
                 $row = [
