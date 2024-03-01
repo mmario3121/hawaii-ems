@@ -40,6 +40,10 @@ class TabelExport implements FromCollection, WithHeadings
 
                 // Append each workday's data
                 foreach ($employee->workdays as $workday) {
+                    if(isset($workday->absense)){
+                        $row[$workday->date] = $workday->absense->title;
+                        continue;
+                    }
                     $row[$workday->date] = $workday->workhours;
                 }
                 $year_month = $this->year . '-' . $this->month;
