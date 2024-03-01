@@ -6,6 +6,7 @@ use App\Models\Workday;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Carbon\Carbon;
+use App\Models\Holiday;
 
 class TabelExport implements FromCollection, WithHeadings
 {
