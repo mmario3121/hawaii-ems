@@ -42,9 +42,9 @@ class TabelExport implements FromCollection, WithHeadings
 
                 // Append each workday's data
                 foreach ($employee->workdays as $workday) {
-                    dd($workday);
                     if($workday->absense_id != null){
-                        $row[$workday->date] = $workday->absense->title;
+                        dd($workday->absense);
+                        $row[$workday->date] = $workday->absense->type;
                         continue;
                     }
                     //find if there is a holiday if date is between start and end date of holiday
