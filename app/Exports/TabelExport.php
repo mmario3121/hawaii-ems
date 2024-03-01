@@ -32,7 +32,7 @@ class TabelExport implements FromCollection, WithHeadings
             ->with(['workdays' => function ($query) use ($startDate, $endDate) {
                 $query->whereBetween('date', [$startDate, $endDate])
                     ->with('absence')
-                    ->select('id', 'employee_id', 'date', 'workhours'); // select only required fields
+                    ->select('id', 'employee_id', 'date', 'workhours', 'absence_id'); // select only required fields
             }])->get()->map(function ($employee) {
                 $row = [
                     'Employee ID' => $employee->id,
@@ -61,7 +61,7 @@ class TabelExport implements FromCollection, WithHeadings
                 $row['Hours'] = $employee->workhours($year_month);
                 $row['Norm'] = $employee->norm($year_month);
                 $row['+/-'] = strval(($employee->norm($year_month) ?? 0) - ($employee->workhours($year_month) ?? 0));
-                $row['Bin'] = $employee->company->bin;
+                $row['Bin'] = strval($employee->company->bin);
                 $row['Company'] = $employee->company->title;
                 return $row;
             });
