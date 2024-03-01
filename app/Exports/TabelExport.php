@@ -40,7 +40,7 @@ class TabelExport implements FromCollection, WithHeadings
 
                 // Append each workday's data
                 foreach ($employee->workdays as $workday) {
-                    if(isset($workday->absense)){
+                    if($workday->absense_id != null){
                         $row[$workday->date] = $workday->absense->title;
                         continue;
                     }
