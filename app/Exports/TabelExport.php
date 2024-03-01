@@ -42,8 +42,10 @@ class TabelExport implements FromCollection, WithHeadings
 
                 // Append each workday's data
                 foreach ($employee->workdays as $workday) {
+                    $day = Carbon::parse($workday->date)->format('d');
+                    $row[$day] = $workday->workhours;
                     if($workday->absence_id != null){
-                        $row[$workday->date] = $workday->absence->type;
+                        $row[$day] = $workday->absence->type;
                         continue;
                     }
                     //find if there is a holiday if date is between start and end date of holiday
@@ -51,10 +53,9 @@ class TabelExport implements FromCollection, WithHeadings
                         ->where('end_date', '>=', $workday->date)
                         ->first();
                     if ($holiday) {
-                        $row[$workday->date] = 'П';
+                        $row[$day] = 'П';
                         continue;
                     }
-                    $row[$workday->date] = $workday->workhours;
                 }
                 $year_month = $this->year . '-' . $this->month;
                 $row['Days'] = $employee->workdays_last_month($year_month);
@@ -85,7 +86,8 @@ class TabelExport implements FromCollection, WithHeadings
         $endDate = $startDate->copy()->endOfMonth();
 
         while ($startDate->lte($endDate)) {
-            $headings[] = $startDate->toDateString(); // Add each date of the month as a heading
+            //display only day number
+            $headings[] = $startDate->format('d');
             $startDate->addDay();
         }
         $headings[] = 'Дни';
