@@ -40,11 +40,17 @@ class TabelExport implements FromCollection, WithHeadings
                 ];
 
                 // Append each workday's data
-                
                 foreach ($employee->workdays as $workday) {
-                    dd($workday);
                     if($workday->absense_id != null){
                         $row[$workday->date] = $workday->absense->title;
+                        continue;
+                    }
+                    //find if there is a holiday if date is between start and end date of holiday
+                    $holiday = Holiday::where('start_date', '<=', $workday->date)
+                        ->where('end_date', '>=', $workday->date)
+                        ->first();
+                    if ($holiday) {
+                        $row[$workday->date] = 'П';
                         continue;
                     }
                     $row[$workday->date] = $workday->workhours;
