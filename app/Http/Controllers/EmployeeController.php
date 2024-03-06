@@ -75,10 +75,7 @@ class EmployeeController extends Controller
     public function getByDepartment(Request $request)
     {
         $employees = Employee::where('department_id', $request->department_id)->paginate(10);
-        return new JsonResponse([
-            'message' => 'success',
-            'data' => EmployeeResource::collection($employees),
-        ], Response::HTTP_OK);
+        return EmployeeResource::collection($employees);
     }
     //getByCompany
     public function getByCompany(Request $request)
