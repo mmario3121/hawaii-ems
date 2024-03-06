@@ -72,13 +72,13 @@ class EmployeeController extends Controller
     }
 
     //getByDepartment
-    public function getByDepartment(Request $request)
+    public function getByDepartment($id)
     {
-        if(isset($request->department_id) == false){
+        if(isset($id) == false){
             $employees = Employee::paginate(10);
             return EmployeeResource::collection($employees);
         }else{
-            $employees = Employee::where('department_id', $request->department_id)->paginate(10);
+            $employees = Employee::where('department_id', $id)->paginate(10);
         }
         return EmployeeResource::collection($employees);
     }
