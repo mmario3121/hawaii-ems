@@ -38,6 +38,11 @@ class EmployeeResource extends JsonResource
         } else {
             $city_title = '';
         }
+        if($this->getShift()) {
+            $shift_hours = $this->getShift()->shift_hours();
+        } else {
+            $shift_hours = '';
+        }
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -58,7 +63,7 @@ class EmployeeResource extends JsonResource
             'bin' => $bin,
             // 'shift_norm' => $this->getShift()->hours,
             'norm_days' => $this->norm_days($request->year_month),
-            'shift_hours' => $this->getShift()->shift_hours(),
+            'shift_hours' => $shift_hours,
         ];
     }
 }
