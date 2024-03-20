@@ -117,6 +117,7 @@ class Employee extends Model
 
     public function norm($year_month)
     {
+        if($this->getShift() == null) return 0;
         $year_month = explode('-', $year_month);
         $year = $year_month[0];
         $month = $year_month[1];
