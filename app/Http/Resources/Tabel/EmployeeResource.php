@@ -40,8 +40,10 @@ class EmployeeResource extends JsonResource
         }
         if($this->getShift()) {
             $shift_hours = $this->getShift()->shift_hours();
+            $norm = $this->norm($request->year_month)
         } else {
             $shift_hours = '';
+            $norm = 0;
         }
         return [
             'id' => $this->id,
@@ -57,7 +59,7 @@ class EmployeeResource extends JsonResource
             'workdays' => WorkdayResource::collection($this->whenLoaded('workdays')),
             'workhours_count' => $this->workhours($request->year_month),
             'workdays_count' => $this->workdays_last_month($request->year_month),
-            'norm' => $this->norm($request->year_month),
+            'norm' => $norm,
             'city' => $city_title,
             'address' => $this->address,
             'bin' => $bin,
