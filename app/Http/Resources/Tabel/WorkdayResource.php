@@ -20,8 +20,12 @@ class WorkdayResource extends JsonResource
     {
         //holiday which starts before this workday and ends after this workday
         // dd($this->employee->getShift()->work_days);
-        if($this->employee->getShift()->work_days >= 5){
-            $holiday = Holiday::where('start_date', '<=', $this->date)->where('end_date', '>=', $this->date)->first();
+        if($this->employee->getShift()!==null){
+            if($this->employee->getShift()->work_days >= 5){
+                $holiday = Holiday::where('start_date', '<=', $this->date)->where('end_date', '>=', $this->date)->first();
+            }else{
+                $holiday = null;
+            }
         }else{
             $holiday = null;
         }

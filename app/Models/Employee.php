@@ -175,6 +175,7 @@ class Employee extends Model
     public function hourly_rate($year_month)
     {
         //calculate hourly rate, round to 2 decimals
+        if($this->norm($year_month) == 0) return 0;
         return number_format($this->salary_gross / $this->norm($year_month), 2, '.', '');
     }
 
