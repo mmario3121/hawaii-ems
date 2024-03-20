@@ -54,6 +54,13 @@ class EmployeeResource extends JsonResource
         $overtime_salary = number_format($overtime * $this->hourly_rate($request->year_month), 2, '.', '');
         //round to integer
         $overtime_salary = round($overtime_salary);
+        if($this->getShift()) {
+            $shift_hours = $this->getShift()->shift_hours();
+            $norm = $this->norm($request->year_month);
+        } else {
+            $shift_hours = '';
+            $norm = 0;
+        }
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -67,7 +74,7 @@ class EmployeeResource extends JsonResource
             'number' => $this->number,
             'workhours_count' => $this->workhours($request->year_month),
             'workdays_count' => $this->workdays_last_month($request->year_month),
-            'norm' => $this->norm($request->year_month),
+            'norm' => $norm,
             'norm_worked' => $norm_worked,
             'norm_days' => $this->norm_days($request->year_month),
             'norm_salary' => $norm_salary,
@@ -77,7 +84,7 @@ class EmployeeResource extends JsonResource
             'city' => $city_title,
             'address' => $this->address,
             'bin' => $bin,
-            'shift_hours' => $this->getShift()->shift_hours(),
+            'shift_hours' => $shift_hours,
         ];
     }
 }
