@@ -40,7 +40,7 @@ class EmployeeResource extends JsonResource
         }
         if($this->getShift()) {
             $shift_hours = $this->getShift()->shift_hours();
-            $norm = $this->norm($request->year_month)
+            $norm = $this->norm($request->year_month);
         } else {
             $shift_hours = '';
             $norm = 0;
