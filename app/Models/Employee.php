@@ -102,9 +102,9 @@ class Employee extends Model
         $year = $year_month[0];
         $month = $year_month[1];
         return $this->workdays()->whereBetween('date', [
-            now()->startOfMonth()->setYear($year)->setMonth($month),
-            now()->endOfMonth()->setYear($year)->setMonth($month)
-            ])->where('workhours', '>', '0')->count();
+            Carbon::create($year, $month, 1), // start of the month
+            Carbon::create($year, $month, 1)->endOfMonth() // end of the month
+        ])->where('workhours', '>', '0')->count();
     }
     public function workdays_this_month($year_month)
     {
