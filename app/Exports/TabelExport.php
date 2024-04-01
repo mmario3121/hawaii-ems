@@ -63,12 +63,12 @@ class TabelExport implements FromCollection, WithHeadings
                         }
                     }
                     if($row[$day] == null){
-                        $row[$day] = " ";
+                        $row[$day] = "b";
                     }
                 }
                 if($count < $days){
                     for($i = $count; $i < $days; $i++){
-                        $row[$i+1] = " ";
+                        $row[$i+1] = "a";
                     }
                 }
                 $year_month = $this->year . '-' . $this->month;
