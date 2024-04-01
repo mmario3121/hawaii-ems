@@ -66,7 +66,9 @@ class TabelExport implements FromCollection, WithHeadings
                         $row[$day] = " ";
                     }
                 }
+                if($employee->id == 554){
                 dd($count, $days);
+                }
                 if($count < $days){
                     for($i = $count; $i < $days; $i++){
                         $row[$i+1] = "a";
