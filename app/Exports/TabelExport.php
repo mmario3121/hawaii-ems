@@ -52,9 +52,11 @@ class TabelExport implements FromCollection, WithHeadings
                     $holiday = Holiday::where('start_date', '<=', $workday->date)
                         ->where('end_date', '>=', $workday->date)
                         ->first();
-                    if ($holiday && $employee->getShift()->work_days >= 5) {
-                        $row[$day] = 'П';
-                        continue;
+                    if($employee->getShift() != null){
+                        if ($holiday && $employee->getShift()->work_days >= 5) {
+                            $row[$day] = 'П';
+                            continue;
+                        }
                     }
                 }
                 $year_month = $this->year . '-' . $this->month;
