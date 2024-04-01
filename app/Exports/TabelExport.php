@@ -68,7 +68,7 @@ class TabelExport implements FromCollection, WithHeadings
                 }
                 if($count < $days){
                     for($i = $count + 3; $i < $days + 3; $i++){
-                        $row[$i+1] = "a";
+                        $row[$i+1] = " ";
                     }
                 }
                 $year_month = $this->year . '-' . $this->month;
