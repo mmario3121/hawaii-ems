@@ -27,13 +27,12 @@ class TabelExport implements FromCollection, WithHeadings
     {
         $startDate = Carbon::createMidnightDate($this->year, $this->month, 1, 'Asia/Almaty');
         $endDate = $startDate->copy()->endOfMonth();
-
         return Employee::where('department_id', $this->departmentId)
             ->with(['workdays' => function ($query) use ($startDate, $endDate) {
                 $query->whereBetween('date', [$startDate, $endDate])
                     ->with('absence')
                     ->select('id', 'employee_id', 'date', 'workhours', 'absence_id'); // select only required fields
-            }])->get()->map(function ($employee) {
+            }])->get()->map(function ($employee, $startDate) {
                 $row = [
                     'Employee ID' => $employee->id,
                     'Name' => $employee->name,
@@ -41,6 +40,9 @@ class TabelExport implements FromCollection, WithHeadings
                 ];
 
                 // Append each workday's data
+                //days in month
+                $days = $startDate->daysInMonth;
+                $count = 0;
                 foreach ($employee->workdays as $workday) {
                     $day = Carbon::parse($workday->date)->format('d');
                     $row[$day] = $workday->workhours;
@@ -59,7 +61,13 @@ class TabelExport implements FromCollection, WithHeadings
                         }
                     }
                     if($row[$day] == null){
-                        $row[$day] = "a";
+                        $row[$day] = " ";
+                    }
+                    $count++;
+                }
+                if($count < $days){
+                    for($i = $count; $i < $days; $i++){
+                        $row[$i+1] = " ";
                     }
                 }
                 $year_month = $this->year . '-' . $this->month;
