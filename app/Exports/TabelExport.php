@@ -61,10 +61,10 @@ class TabelExport implements FromCollection, WithHeadings
                 }
                 $year_month = $this->year . '-' . $this->month;
                 $row['Days'] = $employee->workdays_last_month($year_month);
-                $row['Hours'] = $employee->workhours($year_month);
-                $row['Norm'] = $employee->norm($year_month);
-                $row['+/-'] = strval(($employee->norm($year_month) ?? 0) - ($employee->workhours($year_month) ?? 0));
-                $row['Bin'] = strval($employee->company->bin);
+                $row['Hours'] = $employee->workhours($year_month)?? "0";
+                $row['Norm'] = $employee->norm($year_month)?? "0";
+                $row['+/-'] = strval(($employee->workhours($year_month) ?? 0) - ($employee->norm($year_month) ?? 0));
+                $row['Bin'] = " ".strval($employee->company->bin);
                 $row['Company'] = $employee->company->title;
                 return $row;
             });
