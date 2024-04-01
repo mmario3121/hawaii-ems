@@ -45,6 +45,7 @@ class TabelExport implements FromCollection, WithHeadings
                 $days = $startDate->daysInMonth;
                 $count = 0;
                 foreach ($employee->workdays as $workday) {
+                    $count++;
                     $day = Carbon::parse($workday->date)->format('d');
                     $row[$day] = $workday->workhours;
                     if($workday->absence_id != null){
@@ -64,7 +65,6 @@ class TabelExport implements FromCollection, WithHeadings
                     if($row[$day] == null){
                         $row[$day] = " ";
                     }
-                    $count++;
                 }
                 if($count < $days){
                     for($i = $count; $i < $days; $i++){
