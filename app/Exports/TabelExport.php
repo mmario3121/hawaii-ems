@@ -43,7 +43,7 @@ class TabelExport implements FromCollection, WithHeadings
                 // Append each workday's data
                 foreach ($employee->workdays as $workday) {
                     $day = Carbon::parse($workday->date)->format('d');
-                    $row[$day] = " ";
+                    $row[$day] = "a";
                     $row[$day] = $workday->workhours;
                     if($workday->absence_id != null){
                         $row[$day] = $workday->absence->type;
