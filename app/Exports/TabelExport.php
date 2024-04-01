@@ -63,7 +63,7 @@ class TabelExport implements FromCollection, WithHeadings
                         }
                     }
                     if($row[$day] == null){
-                        $row[$day] = "b";
+                        $row[$day] = " ";
                     }
                 }
                 if($count < $days){
