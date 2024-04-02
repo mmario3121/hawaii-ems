@@ -58,7 +58,9 @@ class TabelExport implements FromCollection, WithHeadings
                         ->first();
                     if($employee->getShift() != null){
                         if ($holiday && $employee->getShift()->work_days >= 5) {
-                            $row[$day] = 'П';
+                            if($workday->workhours == null  || $workday->workhours == 0){
+                                $row[$day] = 'П';
+                            }
                             continue;
                         }
                     }
