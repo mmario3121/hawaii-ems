@@ -61,7 +61,7 @@ class DepartmentController extends Controller
                 'message' => 'success',
                 'data' => DepartmentResource::collection($departments),
             ], Response::HTTP_OK);
-        }elseif($role->containds('treasurer')) {
+        }elseif($role->contains('treasurer')) {
             $departments = Department::with('owner', 'zams', 'groups')->whereIn('id', [52, 54, 56, 55])->get();
             return new JsonResponse([
                 'message' => 'success',
