@@ -49,13 +49,13 @@ class UserController extends Controller
 
         foreach ($roles as $role) {
             if ($role->name == 'admin') {
-                $role->name = 'Админ';
+                $role->name_ru = 'Админ';
             } elseif ($role->name == 'manager') {
-                $role->name = 'Руководитель';
+                $role->name_ru = 'Руководитель';
             } elseif ($role->name == 'hr') {
-                $role->name = 'HR';
+                $role->name_ru = 'HR';
             } elseif ($role->name == 'treasurer') {
-                $role->name = 'Директор Ресторана';
+                $role->name_ru = 'Директор Ресторана';
             }
         }
 
