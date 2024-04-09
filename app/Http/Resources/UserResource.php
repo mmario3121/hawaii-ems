@@ -13,20 +13,20 @@ class UserResource extends JsonResource
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
-    {
-        $roleTranslations = [
-            'manager' => 'Менеджер',
-            'admin' => 'Админ',
-            'treasurer' => 'Директор Ресторана',
-            'hr' => 'HR',
-        ];
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'phone' => $this->phone,
-            'email' => $this->email,
-            'role' => $roleTranslations[$this->role()] ?? $this->role(),
-            'image' => $this->image_url,
-        ];
-    }
+{
+    $roleTranslations = [
+        'manager' => 'Менеджер',
+        'admin' => 'Админ',
+        'treasurer' => 'Директор Ресторана',
+        'hr' => 'HR',
+    ];
+    return [
+        'id' => $this->id,
+        'name' => $this->name,
+        'phone' => $this->phone,
+        'email' => $this->email,
+        'role' => [$roleTranslations[$this->role()] ?? $this->role()],
+        'image' => $this->image_url,
+    ];
+}
 }
