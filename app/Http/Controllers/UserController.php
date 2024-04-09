@@ -45,6 +45,19 @@ class UserController extends Controller
         $roles = Role::select('id', 'name')
         ->whereNot('name', 'developer')
         ->get();
+        //change the names but not in the database
+
+        foreach ($roles as $role) {
+            if ($role->name == 'admin') {
+                $role->name = 'Админ';
+            } elseif ($role->name == 'manager') {
+                $role->name = 'Ркуоводитель';
+            } elseif ($role->name == 'hr') {
+                $role->name = 'HR';
+            } elseif ($role->name == 'treasurer') {
+                $role->name = 'Директор Ресторана';
+            }
+        }
 
         return $roles;
     }
