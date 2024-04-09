@@ -20,12 +20,13 @@ class UserResource extends JsonResource
         'treasurer' => 'Директор Ресторана',
         'hr' => 'HR',
     ];
+    $role = is_array($this->role()) ? $this->role()[0] : $this->role();
     return [
         'id' => $this->id,
         'name' => $this->name,
         'phone' => $this->phone,
         'email' => $this->email,
-        'role' => [$roleTranslations[$this->role()] ?? $this->role()],
+        'role' => [$roleTranslations[$role] ?? $role],
         'image' => $this->image_url,
     ];
 }
