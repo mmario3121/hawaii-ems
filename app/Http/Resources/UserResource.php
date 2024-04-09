@@ -14,12 +14,18 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
+        $roleTranslations = [
+            'manager' => 'Менеджер',
+            'admin' => 'Админ',
+            'treasurer' => 'Директор Ресторана',
+            'hr' => 'HR',
+        ];
         return [
             'id' => $this->id,
             'name' => $this->name,
             'phone' => $this->phone,
             'email' => $this->email,
-            'role' => $this->role(),
+            'role' => $roleTranslations[$this->role()] ?? $this->role(),
             'image' => $this->image_url,
         ];
     }
