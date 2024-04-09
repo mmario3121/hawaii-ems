@@ -44,7 +44,6 @@ class UserController extends Controller
         // Get all roles
         $roles = Role::select('id', 'name')
         ->whereNot('name', 'developer')
-        ->whereNot('name', 'treasurer')
         ->get();
 
         return $roles;
