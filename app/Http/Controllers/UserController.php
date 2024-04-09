@@ -51,7 +51,7 @@ class UserController extends Controller
             if ($role->name == 'admin') {
                 $role->name = 'Админ';
             } elseif ($role->name == 'manager') {
-                $role->name = 'Ркуоводитель';
+                $role->name = 'Руководитель';
             } elseif ($role->name == 'hr') {
                 $role->name = 'HR';
             } elseif ($role->name == 'treasurer') {
