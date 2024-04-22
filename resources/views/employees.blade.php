@@ -3,12 +3,12 @@ use App\Models\Holiday;
 ?>
 <style>
     th, td {
-        width: 50px;
-        height: 50px;
+        width: 50px !important;
+        height: 50px !important;
         text-align: center;
     }
     .wide {
-        width: 200px;
+        width: 200px !important;
     }
 </style>
 <table>
@@ -36,11 +36,13 @@ use App\Models\Holiday;
                         $isHoliday = Holiday::where('start_date', '<=', $date)
                                             ->where('end_date', '>=', $date)
                                             ->exists();
+                        $isWorkday = $workday && $workday->isWorkday;
+
                     @endphp
                     <td style="
                         {{ $workday && $workday->absence ? 'background-color: ' . $workday->absence->color . ';' : '' }}
                         {{ $isHoliday ? 'background-color: red;' : '' }}
-                        {{ $workday && $workday->isWorkday ? 'background-color: green;' : '' }}
+                        {{ $isWorkday ? 'background-color: green;' : '' }}
                     ">
                         @if ($workday && $workday->absence)
                             {{ $workday->absence->type }}
