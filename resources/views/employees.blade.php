@@ -14,16 +14,16 @@ use App\Models\Holiday;
 <table>
     <thead>
         <tr>
-            <th class="wide">ФИО</th>
+            <th>Employee</th>
             @foreach ($dates as $date)
                 <th>{{ $date->format('d') }}</th>
             @endforeach
-            <th>Дни</th>
-            <th>Часы</th>
-            <th>Норма</th>
-            <th>+/-</th>
-            <th class="wide">БИН</th>
-            <th class="wide">Компания</th>
+            <th>Workdays Last Month</th>
+            <th>Workhours</th>
+            <th>Norm</th>
+            <th>Workhours - Norm</th>
+            <th>Company BIN</th>
+            <th>Company Title</th>
         </tr>
     </thead>
     <tbody>
@@ -36,13 +36,11 @@ use App\Models\Holiday;
                         $isHoliday = Holiday::where('start_date', '<=', $date)
                                             ->where('end_date', '>=', $date)
                                             ->exists();
-                        $isWorkday = $workday->isWorkday;
-
                     @endphp
                     <td style="
                         {{ $workday && $workday->absence ? 'background-color: ' . $workday->absence->color . ';' : '' }}
                         {{ $isHoliday ? 'background-color: red;' : '' }}
-                        {{ $isWorkday ? 'background-color: green;' : '' }}
+                        {{ $workday && $workday->workhours > 0 ? 'background-color: green;' : '' }}
                     ">
                         @if ($workday && $workday->absence)
                             {{ $workday->absence->type }}
