@@ -14,16 +14,16 @@ use App\Models\Holiday;
 <table>
     <thead>
         <tr>
-            <th>Employee</th>
+            <th class="wide">ФИО</th>
             @foreach ($dates as $date)
                 <th>{{ $date->format('d') }}</th>
             @endforeach
-            <th>Workdays Last Month</th>
-            <th>Workhours</th>
-            <th>Norm</th>
-            <th>Workhours - Norm</th>
-            <th>Company BIN</th>
-            <th>Company Title</th>
+            <th>Дни</th>
+            <th>Часы</th>
+            <th>Норма</th>
+            <th>+/-</th>
+            <th class="wide">БИН</th>
+            <th class="wide">Компания</th>
         </tr>
     </thead>
     <tbody>
