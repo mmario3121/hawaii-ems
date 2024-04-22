@@ -8,7 +8,7 @@ use App\Models\Holiday;
         text-align: center;
     }
     .wide {
-        width: 200px !important;
+        width: 300px !important;
     }
 </style>
 <table>
