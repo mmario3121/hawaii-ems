@@ -1,3 +1,6 @@
+<?php
+use App\Holiday;
+?>
 <table>
     <thead>
         <tr>
