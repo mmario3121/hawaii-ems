@@ -29,7 +29,7 @@ class TabelExportView implements FromView
             ->with(['workdays' => function ($query) use ($startDate, $endDate) {
                 $query->whereBetween('date', [$startDate, $endDate])
                     ->with('absence')
-                    ->select('id', 'employee_id', 'date', 'workhours', 'absence_id');
+                    ->select('id', 'employee_id', 'date', 'workhours', 'absence_id', 'isWorkday');
             }])->get();
         
         $dates = collect();
