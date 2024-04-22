@@ -31,12 +31,17 @@ class TabelExportView implements FromView
                     ->with('absence')
                     ->select('id', 'employee_id', 'date', 'workhours', 'absence_id');
             }])->get();
-        dd($employees);
+        
+        $dates = collect();
+        for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
+            $dates->push($date->copy());
+         }
 
         return view('employees', [
             'employees' => $employees,
             'startDate' => $startDate,
             'endDate' => $endDate,
+            'dates' => $dates,
         ]);
     }
 }

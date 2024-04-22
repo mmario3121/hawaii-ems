@@ -1,8 +1,23 @@
 <table>
-    @foreach ($employees as $employee)
+    <thead>
         <tr>
-            <td style="background-color: #f00;">{{ $employee->id }}</td>
-            <td style="background-color: #0f0;">{{ $employee->name }}</td>
+            <th>Employee</th>
+            @foreach ($dates as $date)
+                <th>{{ $date->format('d.m.Y') }}</th>
+            @endforeach
         </tr>
-    @endforeach
+    </thead>
+    <tbody>
+        @foreach ($employees as $employee)
+            <tr>
+                <td>{{ $employee->name }}</td>
+                @foreach ($dates as $date)
+                    @php
+                        $workday = $employee->workdays->firstWhere('date', $date->format('Y-m-d'));
+                    @endphp
+                    <td>{{ $workday ? $workday->workhours : '-' }}</td>
+                @endforeach
+            </tr>
+        @endforeach
+    </tbody>
 </table>
