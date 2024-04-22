@@ -24,15 +24,17 @@ use App\Models\Holiday;
                     @php
                         $workday = $employee->workdays->firstWhere('date', $date->format('Y-m-d'));
                         $isHoliday = Holiday::where('start_date', '<=', $date)
-                            ->where('end_date', '>=', $date)
-                            ->exists();
+                                            ->where('end_date', '>=', $date)
+                                            ->exists();
                     @endphp
-                    <td>
-                    @if ($isHoliday && $employee->getShift()->work_days >= 5 && $workday->workhours == 0)
-                        П
-                    @else
-                        {{ $workday ? $workday->workhours : '-' }}
-                    @endif
+                    <td style="{{ $workday && $workday->absence ? 'background-color: ' . $workday->absence->color . ';' : '' }}">
+                        @if ($workday && $workday->absence)
+                            {{ $workday->absence->type }}
+                        @elseif ($isHoliday && $employee->getShift()->work_days >= 5 && $workday->workhours == 0)
+                            П
+                        @else
+                            {{ $workday ? $workday->workhours : '-' }}
+                        @endif
                     </td>
                 @endforeach
                 <td>{{ $employee->workdays_last_month($year_month) ?? "0" }}</td>
