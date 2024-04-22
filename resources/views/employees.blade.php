@@ -1,5 +1,5 @@
 <?php
-use App\Holiday;
+use App\Models\Holiday;
 ?>
 <table>
     <thead>
