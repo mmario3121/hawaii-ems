@@ -2,11 +2,6 @@
 use App\Models\Holiday;
 ?>
 <style>
-    th, td {
-        width: 50px !important;
-        height: 50px !important;
-        text-align: center;
-    }
     .wide {
         width: 300px !important;
     }
