@@ -27,7 +27,11 @@ use App\Models\Holiday;
                                             ->where('end_date', '>=', $date)
                                             ->exists();
                     @endphp
-                    <td style="{{ $workday && $workday->absence ? 'background-color: ' . $workday->absence->color . ';' : '' }}">
+                    <td style="
+                        {{ $workday && $workday->absence ? 'background-color: ' . $workday->absence->color . ';' : '' }}
+                        {{ $isHoliday ? 'background-color: red;' : '' }}
+                        {{ $workday && $workday->workhours > 0 ? 'background-color: green;' : '' }}
+                    ">
                         @if ($workday && $workday->absence)
                             {{ $workday->absence->type }}
                         @elseif ($isHoliday && $employee->getShift()->work_days >= 5 && $workday->workhours == 0)
