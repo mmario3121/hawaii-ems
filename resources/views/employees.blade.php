@@ -36,7 +36,7 @@ use App\Models\Holiday;
                         $isHoliday = Holiday::where('start_date', '<=', $date)
                                             ->where('end_date', '>=', $date)
                                             ->exists();
-                        $isWorkday = $workday && $workday->isWorkday;
+                        $isWorkday = $workday->isWorkday;
 
                     @endphp
                     <td style="
