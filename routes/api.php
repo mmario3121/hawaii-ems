@@ -21,6 +21,7 @@ Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, 'login
 Route::middleware('auth:sanctum')->post('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout']);
 
 Route::get('/export-tabel', [\App\Http\Controllers\TabelExportController::class, 'export']);
+Route::get('/export-tabel1', [\App\Http\Controllers\TabelExportController::class, 'export1']);
 //check role
 Route::middleware(['auth:sanctum', 'role:developer|manager|admin|hr|treasurer'])->group(function () {
 
