@@ -53,7 +53,7 @@ use App\Models\Holiday;
     <tbody>
         @foreach ($employees as $employee)
             <tr>
-                <td>{{ $employee->name }}</td>
+                <td width="10">{{ $employee->name }}</td>
                 @foreach ($dates as $date)
                     @php
                         $workday = $employee->workdays->firstWhere('date', $date->format('Y-m-d'));
@@ -65,7 +65,7 @@ use App\Models\Holiday;
                         {{ $workday && $workday->absence ? 'background-color: ' . $workday->absence->color . ';' : '' }}
                         {{ $isHoliday ? 'background-color: red;' : '' }}
                         {{ $workday && $workday->isWorkday == 1 ? 'background-color: green;' : 'grey' }}
-                    " width="5" height="5">
+                    " width="2">
                         @if ($workday && $workday->absence)
                             {{ $workday->absence->type }}
                         @elseif ($isHoliday && $employee->getShift()->work_days >= 5 && $workday->workhours == 0)
@@ -84,8 +84,8 @@ use App\Models\Holiday;
                 <td style="color: {{ $workhoursNormDiff >= 0 ? 'green' : 'red' }}">
                     {{ strval($workhoursNormDiff) }}
                 </td>
-                <td>{{ " ".strval($employee->company->bin) }}</td>
-                <td>{{ $employee->company->title }}</td>
+                <td width="10">{{ " ".strval($employee->company->bin) }}</td>
+                <td width="10">{{ $employee->company->title }}</td>
             </tr>
         @endforeach
     </tbody>
