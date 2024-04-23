@@ -2,14 +2,38 @@
 use App\Models\Holiday;
 ?>
 <style>
-    th, td {
-        width: 50px !important;
-        height: 50px !important;
-        text-align: center;
-    }
-    .wide {
-        width: 300px !important;
-    }
+    table {
+            width: 100%;
+            page-break-inside: avoid;
+            min-height: 100vh;
+        }
+
+        table, th, td {
+            border: 1px solid #000;
+            border-collapse: collapse;
+
+            border-bottom: 1px solid #fff;
+        }
+
+        thead tr th:nth-child(1) {
+            width: 29%;
+        }
+
+        thead tr th:nth-child(2) {
+            width: 24%;
+        }
+
+        thead tr th:nth-child(3) {
+            width: 20%;
+        }
+
+        thead tr th:nth-child(4) {
+            width: 10%;
+        }
+
+        thead tr th:nth-child(5) {
+            width: 18%;
+        }
 </style>
 <table>
     <thead>
@@ -40,7 +64,7 @@ use App\Models\Holiday;
                     <td style="
                         {{ $workday && $workday->absence ? 'background-color: ' . $workday->absence->color . ';' : '' }}
                         {{ $isHoliday ? 'background-color: red;' : '' }}
-                        {{ $workday && $workday->isWorkday == 1 ? 'background-color: green;' : '' }}
+                        {{ $workday && $workday->isWorkday == 1 ? 'background-color: green;' : 'grey' }}
                     ">
                         @if ($workday && $workday->absence)
                             {{ $workday->absence->type }}
