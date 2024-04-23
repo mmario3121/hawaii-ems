@@ -64,7 +64,7 @@ use App\Models\Holiday;
                     <td style="
                         {{ $workday && $workday->absence ? 'background-color: ' . $workday->absence->color . ';' : '' }}
                         {{ $isHoliday ? 'background-color: red;' : '' }}
-                        {{ $workday && $workday->isWorkday == 1 ? 'background-color: green;' : 'black' }}
+                        {{ $workday && $workday->isWorkday == 1 ? 'background-color: green;' : 'background-color: #7a7a7a;' }}
                     " width="3">
                         @if ($workday && $workday->absence)
                             {{ $workday->absence->type }}
