@@ -65,7 +65,7 @@ use App\Models\Holiday;
                         {{ $workday && $workday->absence ? 'background-color: ' . $workday->absence->color . ';' : '' }}
                         {{ $isHoliday ? 'background-color: red;' : '' }}
                         {{ $workday && $workday->isWorkday == 1 ? 'background-color: green;' : 'grey' }}
-                    " width="2">
+                    " width="3">
                         @if ($workday && $workday->absence)
                             {{ $workday->absence->type }}
                         @elseif ($isHoliday && $employee->getShift()->work_days >= 5 && $workday->workhours == 0)
@@ -75,17 +75,17 @@ use App\Models\Holiday;
                         @endif
                     </td>
                 @endforeach
-                <td>{{ $employee->workdays_last_month($year_month) ?? "0" }}</td>
-                <td>{{ $employee->workhours($year_month) ?? "0" }}</td>
-                <td>{{ $employee->norm($year_month) ?? "0" }}</td>
+                <td width="5">{{ $employee->workdays_last_month($year_month) ?? "0" }}</td>
+                <td width="5">{{ $employee->workhours($year_month) ?? "0" }}</td>
+                <td width="5">{{ $employee->norm($year_month) ?? "0" }}</td>
                 @php
                     $workhoursNormDiff = ($employee->workhours($year_month) ?? 0) - ($employee->norm($year_month) ?? 0);
                 @endphp
                 <td style="color: {{ $workhoursNormDiff >= 0 ? 'green' : 'red' }}">
                     {{ strval($workhoursNormDiff) }}
                 </td>
-                <td width="10">{{ " ".strval($employee->company->bin) }}</td>
-                <td width="10">{{ $employee->company->title }}</td>
+                <td width="15">{{ " ".strval($employee->company->bin) }}</td>
+                <td width="15">{{ $employee->company->title }}</td>
             </tr>
         @endforeach
     </tbody>
