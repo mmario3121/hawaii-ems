@@ -65,7 +65,7 @@ use App\Models\Holiday;
                         {{ $workday && $workday->absence ? 'background-color: ' . $workday->absence->color . ';' : '' }}
                         {{ $isHoliday ? 'background-color: red;' : '' }}
                         {{ $workday && $workday->isWorkday == 1 ? 'background-color: green;' : 'grey' }}
-                    ">
+                    " width="50" height="50">
                         @if ($workday && $workday->absence)
                             {{ $workday->absence->type }}
                         @elseif ($isHoliday && $employee->getShift()->work_days >= 5 && $workday->workhours == 0)
