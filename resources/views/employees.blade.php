@@ -53,7 +53,7 @@ use App\Models\Holiday;
     <tbody>
         @foreach ($employees as $employee)
             <tr>
-                <td width="10">{{ $employee->name }}</td>
+                <td width="20">{{ $employee->name }}</td>
                 @foreach ($dates as $date)
                     @php
                         $workday = $employee->workdays->firstWhere('date', $date->format('Y-m-d'));
@@ -64,7 +64,7 @@ use App\Models\Holiday;
                     <td style="
                         {{ $workday && $workday->absence ? 'background-color: ' . $workday->absence->color . ';' : '' }}
                         {{ $isHoliday ? 'background-color: red;' : '' }}
-                        {{ $workday && $workday->isWorkday == 1 ? 'background-color: green;' : 'grey' }}
+                        {{ $workday && $workday->isWorkday == 1 ? 'background-color: green;' : 'dark-grey' }}
                     " width="3">
                         @if ($workday && $workday->absence)
                             {{ $workday->absence->type }}
@@ -77,15 +77,15 @@ use App\Models\Holiday;
                 @endforeach
                 <td width="5">{{ $employee->workdays_last_month($year_month) ?? "0" }}</td>
                 <td width="5">{{ $employee->workhours($year_month) ?? "0" }}</td>
-                <td width="5">{{ $employee->norm($year_month) ?? "0" }}</td>
+                <td width="6">{{ $employee->norm($year_month) ?? "0" }}</td>
                 @php
                     $workhoursNormDiff = ($employee->workhours($year_month) ?? 0) - ($employee->norm($year_month) ?? 0);
                 @endphp
-                <td style="color: {{ $workhoursNormDiff >= 0 ? 'green' : 'red' }}">
+                <td style="color: {{ $workhoursNormDiff >= 0 ? 'green' : 'red' }}" width="5">
                     {{ strval($workhoursNormDiff) }}
                 </td>
                 <td width="15">{{ " ".strval($employee->company->bin) }}</td>
-                <td width="15">{{ $employee->company->title }}</td>
+                <td width="20">{{ $employee->company->title }}</td>
             </tr>
         @endforeach
     </tbody>
