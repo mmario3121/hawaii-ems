@@ -38,7 +38,7 @@ use App\Models\Holiday;
 <table>
     <thead>
         <tr>
-            <th class="wide">ФИО</th>
+            <th width="30">ФИО</th>
             @foreach ($dates as $date)
                 <th>{{ $date->format('d') }}</th>
             @endforeach
@@ -53,7 +53,7 @@ use App\Models\Holiday;
     <tbody>
         @foreach ($employees as $employee)
             <tr>
-                <td width="20">{{ $employee->name }}</td>
+                <td width="30">{{ $employee->name }}</td>
                 @foreach ($dates as $date)
                     @php
                         $workday = $employee->workdays->firstWhere('date', $date->format('Y-m-d'));
@@ -64,7 +64,7 @@ use App\Models\Holiday;
                     <td style="
                         {{ $workday && $workday->absence ? 'background-color: ' . $workday->absence->color . ';' : '' }}
                         {{ $isHoliday ? 'background-color: red;' : '' }}
-                        {{ $workday && $workday->isWorkday == 1 ? 'background-color: green;' : 'dark-grey' }}
+                        {{ $workday && $workday->isWorkday == 1 ? 'background-color: green;' : 'black' }}
                     " width="3">
                         @if ($workday && $workday->absence)
                             {{ $workday->absence->type }}
