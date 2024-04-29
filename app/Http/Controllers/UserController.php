@@ -16,9 +16,9 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::whereDoesntHave('roles', function ($query) {
-            $query->whereIn('name', ['developer', 'admin']);
-        })->get();
+            $users = User::whereDoesntHave('roles', function ($query) {
+                $query->whereIn('name', ['developer', 'admin']);
+            })->get();
 
         // $users = User::paginate(10);
         return new JsonResponse([

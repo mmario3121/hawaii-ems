@@ -23,6 +23,7 @@ class TabelExportController extends Controller
         $departmentId = $request->input('department_id');
         $year = $request->input('year');
         $month = $request->input('month');
-        return Excel::download(new TabelExportView($departmentId, $year, $month), 'tabel.xlsx');
+        $ids = $request->input('ids');
+        return Excel::download(new TabelExportView($departmentId, $year, $month, $ids), 'tabel.xlsx');
     }
 }

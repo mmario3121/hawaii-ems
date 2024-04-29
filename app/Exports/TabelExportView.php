@@ -13,11 +13,14 @@ class TabelExportView implements FromView
     private $year;
     private $month;
 
-    public function __construct(int $departmentId, int $year, int $month)
+    private $ids;
+
+    public function __construct(int $departmentId, int $year, int $month, $ids)
     {
         $this->departmentId = $departmentId;
         $this->year = $year;
         $this->month = $month;
+        $this->ids = $ids;
     }
 
     public function view(): View
@@ -25,13 +28,23 @@ class TabelExportView implements FromView
         $startDate = Carbon::createMidnightDate($this->year, $this->month, 1, 'Asia/Almaty');
         $endDate = $startDate->copy()->endOfMonth();
 
-        $employees = Employee::where('department_id', $this->departmentId)
+        if($this->ids){
+            $employees = Employee::whereIn('id', $this->ids)
             ->with(['workdays' => function ($query) use ($startDate, $endDate) {
                 $query->whereBetween('date', [$startDate, $endDate])
                     ->with('absence')
                     ->select('id', 'employee_id', 'date', 'workhours', 'absence_id', 'isWorkday');
             }])->get();
+        }
+        else{
+            $employees = Employee::where('department_id', $this->departmentId)
+                ->with(['workdays' => function ($query) use ($startDate, $endDate) {
+                    $query->whereBetween('date', [$startDate, $endDate])
+                        ->with('absence')
+                        ->select('id', 'employee_id', 'date', 'workhours', 'absence_id', 'isWorkday');
+                }])->get();
         
+            }
         $dates = collect();
         for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
             $dates->push($date->copy());
