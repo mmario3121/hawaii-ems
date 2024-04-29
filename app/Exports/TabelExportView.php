@@ -29,7 +29,7 @@ class TabelExportView implements FromView
         $endDate = $startDate->copy()->endOfMonth();
 
         if($this->ids){
-            $employees = Employee::whereIn('id', $this->ids)
+            $employees = Employee::whereIn('id', explode(',', $this->ids))
             ->with(['workdays' => function ($query) use ($startDate, $endDate) {
                 $query->whereBetween('date', [$startDate, $endDate])
                     ->with('absence')
