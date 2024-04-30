@@ -46,11 +46,10 @@ class TabelExportView implements FromView
         
             }
         $dates = collect();
-        // dd($startDate, $endDate);
-        for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
+        $date = $startDate->copy();
+        for (; $date->lte($endDate); $date->addDay()) {
             $dates->push($date->copy());
-         }
-        dd($startDate, $endDate);
+        }
 
         $year_month = $startDate->format('Y-m');
         return view('employees', [
