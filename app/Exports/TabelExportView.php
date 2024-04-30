@@ -51,7 +51,7 @@ class TabelExportView implements FromView
          }
 
         $year_month = $startDate->format('Y-m');
-
+        dd($startDate, $endDate, $year_month);
         return view('employees', [
             'employees' => $employees,
             'startDate' => $startDate,

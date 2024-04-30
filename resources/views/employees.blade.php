@@ -1,6 +1,5 @@
 <?php
 use App\Models\Holiday;
-dd($year_month);
 ?>
 <style>
     table {
