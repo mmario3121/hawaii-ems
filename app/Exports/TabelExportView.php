@@ -26,6 +26,7 @@ class TabelExportView implements FromView
     public function view(): View
     {
         $startDate = Carbon::createMidnightDate($this->year, $this->month, 1, 'Asia/Almaty');
+        dd($startDate);
         $endDate = $startDate->copy()->endOfMonth();
 
         if($this->ids){
@@ -51,7 +52,6 @@ class TabelExportView implements FromView
          }
 
         $year_month = $startDate->format('Y-m');
-        dd($startDate, $endDate, $year_month);
         return view('employees', [
             'employees' => $employees,
             'startDate' => $startDate,
