@@ -54,7 +54,7 @@ use App\Models\Holiday;
         @foreach ($employees as $employee)
             <tr>
                 <td width="30">{{ $employee->name }}</td>
-                <td width="5">{{ $employee->position->title }}</td>
+                <td width="25">{{ $employee->position->title }}</td>
                 <td width="5">{{ $employee->getShiftName() }}</td>
                 <td>{{ number_format($employee->salary_gross, 0, '', '') }}</td>
                 @php
