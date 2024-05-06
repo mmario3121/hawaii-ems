@@ -58,7 +58,7 @@ use App\Models\Holiday;
                 <td width="30">{{ $employee->name }}</td>
                 <td width="20">{{ $employee->position->title }}</td>
                 <td width="10">{{ $employee->number }}</td>
-                <td width="10">{{ $employee->shift->title }}</td>
+                <td width="10">{{ $employee->getShiftName() }}</td>
                 @foreach ($dates as $date)
                     @php
                         $workday = $employee->workdays->firstWhere('date', $date->format('Y-m-d'));
