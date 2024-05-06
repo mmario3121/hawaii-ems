@@ -55,7 +55,7 @@ use App\Models\Holiday;
             <tr>
                 <td width="30">{{ $employee->name }}</td>
                 <td width="5">{{ $employee->position->title }}</td>
-                <td width="5">{{ $employee->shift->title }}</td>
+                <td width="5">{{ $employee->getShiftName() }}</td>
                 <td>{{ number_format($employee->salary_gross, 0, '', '') }}</td>
                 <td>{{ $employee->workhours($year_month) ?? 0 }}</td>
                 <td>{{ $employee->norm($year_month) ?? 0 }}</td>

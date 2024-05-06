@@ -73,7 +73,7 @@ use App\Models\Holiday;
                 <td width="5">{{ $employee->workdays_last_month($year_month) ?? "0" }}</td>
                 <td width="5">{{ $employee->workhours($year_month) ?? "0" }}</td>
                 <td width="6">{{ $employee->norm($year_month) ?? "0" }}</td>
-                <td>{{ number_format($employee->company->bin, 0, '', '') }}</td>
+                <td width="20">{{ number_format($employee->company->bin, 0, '', '') }}</td>
                 <td width="20">{{ $employee->company->title }}</td>
             </tr>
         @endforeach
