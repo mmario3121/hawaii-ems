@@ -57,11 +57,36 @@ use App\Models\Holiday;
                 <td width="5">{{ $employee->position->title }}</td>
                 <td width="5">{{ $employee->getShiftName() }}</td>
                 <td>{{ number_format($employee->salary_gross, 0, '', '') }}</td>
-                <td>{{ $employee->workhours($year_month) ?? 0 }}</td>
-                <td>{{ $employee->norm($year_month) ?? 0 }}</td>
+                @php
+                    if($employee->workhours($request->year_month) > $employee->norm($request->year_month)) {
+                        $norm_worked = $employee->norm($request->year_month);
+                    } else {
+                        $norm_worked = $employee->workhours($request->year_month);
+                    }
+                    if($employee->workhours($request->year_month) > $employee->norm($request->year_month)) {
+                        $overtime = $employee->workhours($request->year_month) - $employee->norm($request->year_month);
+                    } else {
+                        $overtime = 0;
+                    }
+                    $norm_salary = number_format($norm_worked * $employee->hourly_rate($request->year_month), 2, '.', '');
+
+                    //overtime_salary integer
+                    $overtime_salary = number_format($overtime * $employee->hourly_rate($request->year_month), 2, '.', '');
+                    //round to integer
+                    $overtime_salary = round($overtime_salary);
+                    if($employee->getShift()) {
+                        $shift_hours = $employee->getShift()->shift_hours();
+                        $norm = $employee->norm($request->year_month);
+                    } else {
+                        $shift_hours = '';
+                        $norm = 0;
+                    }
+                @endphp
+                <td>{{ $norm_worked ?? 0 }}</td>
+                <td>{{ $norm }}</td>
                 <td>{{ $employee->hourly_rate($year_month) }}</td>
-                <td>{{ $employee->overtime($year_month) }}</td>
-                <td>{{ $employee->overtime_salary($year_month) }}</td>
+                <td>{{ $overtime }}</td>
+                <td>{{ $overtime_salary }}</td>
                 <td width="20">{{ $employee->company->title }}</td>
             </tr>
         @endforeach
