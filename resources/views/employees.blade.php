@@ -85,7 +85,7 @@ use App\Models\Holiday;
                 <td style="color: {{ $workhoursNormDiff >= 0 ? 'green' : 'red' }}" width="5">
                     {{ strval($workhoursNormDiff) }}
                 </td>
-                <td width="40">{{ $employee->company->bin  }}</td>
+                <td width="40">{{ "'" . $employee->company->bin  }}</td>
                 <td width="20">{{ $employee->company->title }}</td>
             </tr>
         @endforeach
