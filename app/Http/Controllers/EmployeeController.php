@@ -13,7 +13,8 @@ use Illuminate\Http\JsonResponse;
 use App\Models\Shift;
 use App\Models\Workday;
 use Carbon\Carbon;
-
+use App\Models\Company;
+use App\Models\Department;
 class EmployeeController extends Controller
 {
     //store
@@ -57,8 +58,16 @@ class EmployeeController extends Controller
     //index with resource and pagination
     public function index()
     {
-        $employees = Employee::paginate(20);
-        return EmployeeResource::collection($employees);
+        $user = auth()->user();
+        if($user->hasRole('admin')){
+            $employees = Employee::paginate(20);
+            return EmployeeResource::collection($employees);
+        }else{
+            $branch_id = $user->branch_id;
+            $companies = Company::where('branch_id', $branch_id)->get();
+            $employees = Employee::whereIn('company_id', $companies->pluck('id'))->paginate(20);
+            return EmployeeResource::collection($employees);
+        }
     }
 
     //show with resource
@@ -74,6 +83,17 @@ class EmployeeController extends Controller
     //getByDepartment
     public function getByDepartment($id)
     {
+        $user = auth()->user();
+        $companies = Company::where('branch_id', $user->branch_id)->pluck('id')->toArray();
+        $department = Department::where('id', $id)->first();
+        if($department->company_id != null){
+            if(!in_array($department->company_id, $companies)){
+                return new JsonResponse([
+                    'message' => 'error',
+                    'data' => 'Forbidden',
+                ], Response::HTTP_FORBIDDEN);
+            }
+        }
         if(isset($id) == false){
             $employees = Employee::paginate(10);
             return EmployeeResource::collection($employees);

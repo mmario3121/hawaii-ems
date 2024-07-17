@@ -94,6 +94,7 @@ class UserController extends Controller
         'email' => $validated['email'],
         'password' => bcrypt($validated['password']),
         'email_verified_at' => now(),
+        'branch_id' => $validated['branch_id'],
     ])->assignRole([$validated['role']]);
 
     if($request->hasFile('image')){

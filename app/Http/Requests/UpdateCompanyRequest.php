@@ -25,6 +25,7 @@ class UpdateCompanyRequest extends FormRequest
             'title' => 'required|max:255',
             'id' => 'required|integer',
             'bin' => 'max:255',
+            'branch_id' => 'required|exists:branches,id',
         ];
     }
 }

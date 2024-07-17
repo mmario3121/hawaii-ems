@@ -37,6 +37,7 @@ class UserResource extends JsonResource
             'role' => $this->role(),
             'role_ru' => $role_ru,
             'image' => $this->image_url,
+            'branch' => $this->branch,
         ];
     }
 }

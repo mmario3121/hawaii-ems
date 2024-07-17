@@ -25,6 +25,7 @@ class StoreCompanyRequest extends FormRequest
             //
             'title' => 'required|max:255',
             'bin' => 'max:255',
+            'branch_id' => 'required|exists:branches,id',
         ];
     }
 }

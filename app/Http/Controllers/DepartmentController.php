@@ -10,6 +10,7 @@ use App\Http\Resources\DepartmentListResource;
 use App\Models\Department;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\JsonResponse;
+use App\Models\Company;
 
 class DepartmentController extends Controller
 {
@@ -68,15 +69,30 @@ class DepartmentController extends Controller
                 'data' => DepartmentResource::collection($departments),
             ], Response::HTTP_OK);
         }
-        $departments = Department::with('owner', 'zams', 'groups')->get();
-        return new JsonResponse([
-            'message' => 'success',
-            'data' => DepartmentResource::collection($departments),
-        ], Response::HTTP_OK);
+        if($role->contains('admin')) {
+            $departments = Department::with('owner', 'zams', 'groups')->get();
+            return new JsonResponse([
+                'message' => 'success',
+                'data' => DepartmentResource::collection($departments),
+            ], Response::HTTP_OK);
+        }
+        $companies = Company::where('branch_id', $user->branch_id)->pluck('id')->toArray();
+        $departments = Department::with('owner', 'zams', 'groups')
+            ->whereIn('company_id', $companies)
+            ->get();
+
     }
     public function list()
     {
-        $departments = Department::all();
+        $user = auth()->user();
+        $companies = Company::where('branch_id', $user->branch_id)->pluck('id')->toArray();
+        if($user->hasRole('admin')){
+            $departments = Department::with('owner', 'zams', 'groups')->get();
+        }else{
+            $departments = Department::with('owner', 'zams', 'groups')
+                ->whereIn('company_id', $companies)
+                ->get();
+        }
         return new JsonResponse([
             'message' => 'success',
             'data' => DepartmentListResource::collection($departments),

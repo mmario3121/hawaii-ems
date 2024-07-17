@@ -26,7 +26,13 @@ Route::get('/export-norm', [\App\Http\Controllers\TabelExportController::class, 
 //check role
 Route::middleware(['auth:sanctum', 'role:developer|manager|admin|hr|treasurer'])->group(function () {
 
-        //employees
+    //branches
+    Route::get('/branches/get', [\App\Http\Controllers\BranchController::class, 'index']);
+    Route::post('/branches/create', [\App\Http\Controllers\BranchController::class, 'store']);
+    Route::post('/branches/update', [\App\Http\Controllers\BranchController::class, 'update']);
+    Route::post('/branches/delete', [\App\Http\Controllers\BranchController::class, 'destroy']);
+
+    //employees
     Route::get('/employees/get', [\App\Http\Controllers\EmployeeController::class, 'index']);
     Route::post('/employees/create', [\App\Http\Controllers\EmployeeController::class, 'store']);
     Route::post('/employees/update', [\App\Http\Controllers\EmployeeController::class, 'update']);

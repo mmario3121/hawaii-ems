@@ -34,6 +34,7 @@ class StoreUserRequest extends FormRequest
                 Rule::in(['hr', 'treasurer', 'manager']),
             ],
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'branch_id' => 'required|exists:branches,id',
         ];
     }
 }

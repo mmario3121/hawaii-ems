@@ -25,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'branch_id',
     ];
 
     /**
@@ -55,5 +56,10 @@ class User extends Authenticatable
     public function getImageUrlAttribute(): string|null
     {
         return $this->image ? Storage::disk('custom')->url(self::IMAGE_PATH . '/' . $this->image) : null;
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
     }
 }

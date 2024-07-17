@@ -16,7 +16,12 @@ class CompanyController extends Controller
     //
     public function index()
     {
-        $companies = Company::all();
+        $user = auth()->user();
+        if ($user->hasRole('admin')) {
+            $companies = Company::all();
+        } else {
+            $companies = Company::where('branch_id', $user->branch_id)->get();
+        }
         return new JsonResponse([
             'message' => 'success',
             'data' => CompanyResource::collection($companies),
