@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('departments', function (Blueprint $table) {
             //
-            $table->foreignId('branch_id')->constrained('branches');
+            $table->unsignedBigInteger('branch_id')->nullable();
         });
     }
 
@@ -24,7 +24,6 @@ return new class extends Migration
     {
         Schema::table('departments', function (Blueprint $table) {
             //
-            $table->dropForeign(['branch_id']);
             $table->dropColumn('branch_id');
         });
     }
