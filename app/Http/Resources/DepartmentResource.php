@@ -29,6 +29,7 @@ class DepartmentResource extends JsonResource
             'owner' => new UserResource($this->whenLoaded('owner')),
             'zams' => EmployeeResource::collection($this->whenLoaded('zams')),
             'groups' => GroupResource::collection($this->whenLoaded('groups')), 
+            'branch' => new BranchResource($this->whenLoaded('branch')),
         ];
     }
 }

@@ -57,40 +57,38 @@ class DepartmentController extends Controller
         $user = auth()->user();
         $role = $user->roles->pluck('name');
         if($role->contains('manager')) {
-            $departments = Department::with('owner', 'zams', 'groups')->where('owner_id', $user->id)->get();
+            $departments = Department::with('owner', 'zams', 'groups', 'branch')->where('owner_id', $user->id)->get();
             return new JsonResponse([
                 'message' => 'success',
                 'data' => DepartmentResource::collection($departments),
             ], Response::HTTP_OK);
         }elseif($role->contains('treasurer')) {
-            $departments = Department::with('owner', 'zams', 'groups')->whereIn('id', [52, 54, 56, 55])->get();
+            $departments = Department::with('owner', 'zams', 'groups', 'branch')->whereIn('id', [52, 54, 56, 55])->get();
             return new JsonResponse([
                 'message' => 'success',
                 'data' => DepartmentResource::collection($departments),
             ], Response::HTTP_OK);
         }
         if($role->contains('admin')) {
-            $departments = Department::with('owner', 'zams', 'groups')->get();
+            $departments = Department::with('owner', 'zams', 'groups', 'branch')->get();
             return new JsonResponse([
                 'message' => 'success',
                 'data' => DepartmentResource::collection($departments),
             ], Response::HTTP_OK);
         }
-        $companies = Company::where('branch_id', $user->branch_id)->pluck('id')->toArray();
-        $departments = Department::with('owner', 'zams', 'groups')
-            ->whereIn('company_id', $companies)
+        $departments = Department::with('owner', 'zams', 'groups', 'branch')
+            ->where('branch_id', $user->branch_id)
             ->get();
 
     }
     public function list()
     {
         $user = auth()->user();
-        $companies = Company::where('branch_id', $user->branch_id)->pluck('id')->toArray();
         if($user->hasRole('admin')){
-            $departments = Department::with('owner', 'zams', 'groups')->get();
+            $departments = Department::with('owner', 'zams', 'groups', 'branch')->get();
         }else{
-            $departments = Department::with('owner', 'zams', 'groups')
-                ->whereIn('company_id', $companies)
+            $departments = Department::with('owner', 'zams', 'groups', 'branch')
+                ->where('branch_id', $user->branch_id)
                 ->get();
         }
         return new JsonResponse([
@@ -102,7 +100,7 @@ class DepartmentController extends Controller
     //getDepartmentById
     public function getDepartmentById(Request $request)
     {
-        $department = Department::with('owner', 'zams', 'groups')->find($request->id);
+        $department = Department::with('owner', 'zams', 'groups', 'branch')->find($request->id);
         return new JsonResponse([
             'message' => 'success',
             'data' => new DepartmentResource($department),

@@ -14,7 +14,8 @@ class Department extends Model
     protected $fillable = [
         'title',
         'owner_id',
-        'company_id'
+        'company_id',
+        'branch_id',
     ];
 
     public function employees()
@@ -43,5 +44,10 @@ class Department extends Model
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
     }
 }
