@@ -80,6 +80,10 @@ class DepartmentController extends Controller
             ->where('branch_id', $user->branch_id)
             ->get();
 
+        return new JsonResponse([
+            'message' => 'success',
+            'data' => DepartmentResource::collection($departments),
+        ], Response::HTTP_OK);
     }
     public function list()
     {
