@@ -64,8 +64,8 @@ class EmployeeController extends Controller
             return EmployeeResource::collection($employees);
         }else{
             $branch_id = $user->branch_id;
-            $companies = Company::where('branch_id', $branch_id)->get();
-            $employees = Employee::whereIn('company_id', $companies->pluck('id'))->paginate(20);
+            $departments = Department::where('branch_id', $branch_id)->get();
+            $employees = Employee::whereIn('department_id', $departments->pluck('id'))->paginate(20);
             return EmployeeResource::collection($employees);
         }
     }
