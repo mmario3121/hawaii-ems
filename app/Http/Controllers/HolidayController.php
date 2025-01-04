@@ -16,7 +16,7 @@ class HolidayController extends Controller
     //
     public function index()
     {
-        $holidays = Holiday::paginate(10);
+        $holidays = Holiday::all();
         return new JsonResponse([
             'message' => 'success',
             'data' => HolidayResource::collection($holidays),
