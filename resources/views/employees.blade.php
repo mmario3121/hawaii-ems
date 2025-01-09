@@ -69,7 +69,7 @@ use App\Models\Holiday;
                     " width="3">
                         @if ($workday && $workday->absence)
                             {{ $workday->absence->type }}
-                        @elseif ($isHoliday && $employee->getShift() && $employee->getShift()->work_days >= 5 && $workday->workhours == 0)
+                        @elseif ($isHoliday && $employee->getShift() && $employee->getShift()->work_days >= 5 && (!$workday || $workday->workhours == 0))
                             П
                         @else
                             {{ $workday ? $workday->workhours : '-' }}
